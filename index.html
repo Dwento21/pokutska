@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ПОКУТСЬКА ПЕКАРНЯ — свіжа випічка щодня. Натуральні інгредієнти, традиційні рецепти, справжній смак домашнього хліба." />
+  <title>ПОКУТСЬКА ПЕКАРНЯ</title>
+
+  <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header" id="header">
+    <div class="header__inner container">
+
+      <!-- Logo -->
+      <a href="#home" class="header__logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></span>
+      </a>
+
+      <!-- Navigation -->
+      <nav class="header__nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="#home" class="nav__link">Головна</a></li>
+          <li><a href="#about" class="nav__link">Про нас</a></li>
+          <li><a href="#menu" class="nav__link">Асортимент</a></li>
+          <li><a href="#bestsellers" class="nav__link">Хіти продажу</a></li>
+          <li><a href="#gallery" class="nav__link">Галерея</a></li>
+          <li><a href="#contacts" class="nav__link">Контакти</a></li>
+        </ul>
+      </nav>
+
+      <!-- CTA + Burger -->
+      <div class="header__actions">
+        <a href="#contacts" class="btn btn--outline">Замовити</a>
+        <button class="burger" id="burger" aria-label="Меню" aria-controls="nav" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="home">
+    <div class="hero__bg">
+      <!-- Замініть на ваше фото: images/hero-bread.jpg -->
+      <img src="hero.png" alt="Свіжа випічка" class="hero__img" />
+      <div class="hero__overlay"></div>
+    </div>
+
+    <div class="hero__content container">
+      <p class="hero__eyebrow">з любов'ю, щодня</p>
+      <h1 class="hero__title">ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></h1>
+      <p class="hero__subtitle">Свіжа випічка щодня, натуральні інгредієнти<br>та справжній смак домашнього хліба</p>
+      <div class="hero__btns">
+        <a href="#menu" class="btn btn--primary">Переглянути асортимент</a>
+        <a href="#contacts" class="btn btn--ghost">Наші контакти</a>
+      </div>
+    </div>
+
+    <!-- Декоративний скрол-індикатор -->
+    <div class="hero__scroll">
+      <span>Гортайте вниз</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PRO NAS ===================== -->
+  <section class="about reveal" id="about">
+    <div class="container about__grid">
+
+      <!-- Фото зліва -->
+      <div class="about__img-wrap">
+        <!-- Замініть на ваше фото: images/about-bakery.jpg -->
+        <img src="about.png" alt="Наша пекарня" class="about__img" />
+        <div class="about__img-decor">з 2010 року</div>
+      </div>
+
+      <!-- Текст справа -->
+      <div class="about__text">
+        <p class="section-eyebrow">Наша історія</p>
+        <h2 class="section-title">Більше, ніж просто пекарня</h2>
+        <p class="about__lead">ПОКУТСЬКА ПЕКАРНЯ народилась з простої ідеї — повернути людям смак справжнього хліба, такого, як пекли колись у кожній хаті.</p>
+        <p class="about__body">Більше ніж десять років тому наш засновник відчинив двері маленької пекарні в серці Покуття. Сьогодні ми — команда закоханих у свою справу пекарів, які щодня о четвертій ранку розпочинають роботу, щоб ви отримали тільки свіже.</p>
+        <p class="about__body">Ми використовуємо лише натуральні інгредієнти: борошно від місцевих млинів, справжнє вершкове масло, жива закваска, яку ми плекаємо вже роками. Жодних консервантів. Жодних компромісів.</p>
+
+        <div class="about__badges">
+          <div class="badge"><span>100%</span><small>натуральний склад</small></div>
+          <div class="badge"><span>∞</span><small>рецептів з душею</small></div>
+          <div class="badge"><span>365</span><small>свіжих днів на рік</small></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== ASORTYMENT ===================== -->
+  <section class="menu reveal" id="menu">
+    <div class="container">
+      <p class="section-eyebrow center">Що ми пропонуємо</p>
+      <h2 class="section-title center">Наш асортимент</h2>
+      <p class="section-sub center">Щодня ми готуємо широкий вибір хліба, випічки та десертів для вас</p>
+
+      <div class="menu__grid">
+
+        <!-- Картка 1 -->
+        <div class="menu-card reveal">
+          <div class="menu-card__img-wrap">
+            <img src="cat-bread.png" alt="Хліб" class="menu-card__img" />
+          </div>
+          <div class="menu-card__body">
+            <h3 class="menu-card__title">Хліб</h3>
+            <p class="menu-card__desc">Пшеничний, житній, на заквасці — хліб, який пахне справжнім домом.</p>
+            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+          </div>
+        </div>
+
+        <!-- Картка 2 -->
+        <div class="menu-card reveal">
+          <div class="menu-card__img-wrap">
+            <img src="cat-croasan.png" alt="Круасани" class="menu-card__img" />
+          </div>
+          <div class="menu-card__body">
+            <h3 class="menu-card__title">Круасани</h3>
+            <p class="menu-card__desc">Хрусткі зовні, ніжні всередині — класичні та з різними начинками.</p>
+            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+          </div>
+        </div>
+
+        <!-- Картка 3 -->
+        <div class="menu-card reveal">
+          <div class="menu-card__img-wrap">
+            <img src="cat-buns.png" alt="Булочки" class="menu-card__img" />
+          </div>
+          <div class="menu-card__body">
+            <h3 class="menu-card__title">Булочки</h3>
+            <p class="menu-card__desc">М'які, пухнасті булочки — ідеальний початок ранку або полуденок.</p>
+            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+          </div>
+        </div>
+
+        <!-- Картка 4 -->
+        <div class="menu-card reveal">
+          <div class="menu-card__img-wrap">
+            <img src="cat-sweets.png" alt="Солодка випічка" class="menu-card__img" />
+          </div>
+          <div class="menu-card__body">
+            <h3 class="menu-card__title">Солодка випічка</h3>
+            <p class="menu-card__desc">Тістечка, еклери, штруделі та інші солодощі, що дарують радість.</p>
+            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+          </div>
+        </div>
+
+        <!-- Картка 5 -->
+        <div class="menu-card reveal">
+          <div class="menu-card__img-wrap">
+            <img src="cat-pies.png" alt="Пироги" class="menu-card__img" />
+          </div>
+          <div class="menu-card__body">
+            <h3 class="menu-card__title">Пироги</h3>
+            <p class="menu-card__desc">Закриті та відкриті пироги з традиційними начинками — солоні й солодкі.</p>
+            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+          </div>
+        </div>
+
+        <!-- Картка 6 -->
+        <div class="menu-card reveal">
+          <div class="menu-card__img-wrap">
+            <img src="cat-seasonal.png" alt="Сезонні новинки" class="menu-card__img" />
+          </div>
+          <div class="menu-card__body">
+            <h3 class="menu-card__title">Сезонні новинки</h3>
+            <p class="menu-card__desc">Щосезону ми дивуємо свіжими рецептами, натхненними природою Покуття.</p>
+            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+          </div>
+        </div>
+
+      </div>
+         <p class="menu__grid-hint">← свайпайте →</p>
+    </div>
+  </section>
+
+  <!-- ===================== BESTSELLERS ===================== -->
+  <section class="bestsellers reveal" id="bestsellers">
+    <div class="container">
+      <p class="section-eyebrow center">Найбільш бажані</p>
+      <h2 class="section-title center">Хіти продажу</h2>
+      <p class="section-sub center">Позиції, до яких повертаються знову і знову</p>
+
+      <div class="products__grid">
+
+        <!-- Product 1 -->
+        <div class="product-card reveal">
+          <div class="product-card__img-wrap">
+            <img src="croissan-clasic.png" alt="Круасан класичний" class="product-card__img" />
+            <span class="product-card__badge">Хіт</span>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Круасан класичний</h3>
+            <p class="product-card__desc">27 шарів тіста, справжнє вершкове масло, золотиста скоринка</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">35 грн</span>
+              <a href="#contacts" class="btn btn--sm">Замовити</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card reveal">
+          <div class="product-card__img-wrap">
+            <img src="croissan-choco.png" alt="Круасан шоколадний" class="product-card__img" />
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Круасан шоколадний</h3>
+            <p class="product-card__desc">З бельгійською шоколадною начинкою та хрусткою скоринкою</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">42 грн</span>
+              <a href="#contacts" class="btn btn--sm">Замовити</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card reveal">
+          <div class="product-card__img-wrap">
+            <img src="baguette.png" alt="Багет французький" class="product-card__img" />
+            <span class="product-card__badge">Хіт</span>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Багет французький</h3>
+            <p class="product-card__desc">Хрусткий зовні, м'який всередині, з ароматом свіжого борошна</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">38 грн</span>
+              <a href="#contacts" class="btn btn--sm">Замовити</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card reveal">
+          <div class="product-card__img-wrap">
+            <img src="cinnamon.png" alt="Булочка з корицею" class="product-card__img" />
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Булочка з корицею</h3>
+            <p class="product-card__desc">Ніжне здобне тісто, справжня кориця і карамельна глазур</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">32 грн</span>
+              <a href="#contacts" class="btn btn--sm">Замовити</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card reveal">
+          <div class="product-card__img-wrap">
+            <img src="sourdough.png" alt="Хліб на заквасці" class="product-card__img" />
+            <span class="product-card__badge">Фаворит</span>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Хліб на заквасці</h3>
+            <p class="product-card__desc">Жива закваска, довге бродіння, неповторний характер і смак</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">95 грн</span>
+              <a href="#contacts" class="btn btn--sm">Замовити</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card reveal">
+          <div class="product-card__img-wrap">
+            <img src="cheese-snail.png" alt="Сирний равлик" class="product-card__img" />
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Сирний равлик</h3>
+            <p class="product-card__desc">Листкове тісто з ніжним сиром і зеленню — ідеально до кави</p>
+            <div class="product-card__footer">
+              <span class="product-card__price">40 грн</span>
+              <a href="#contacts" class="btn btn--sm">Замовити</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ATMOSPHERE BLOCK ===================== -->
+  <section class="atmosphere reveal">
+    <div class="container atmosphere__grid">
+
+      <div class="atmosphere__photos">
+        <!-- Замініть: images/atm-1.jpg та images/atm-2.jpg -->
+        <img src="atm1.png" alt="Атмосфера пекарні" class="atm-img atm-img--top" />
+        <img src="atm2.png" alt="Свіжа випічка" class="atm-img atm-img--bottom" />
+      </div>
+
+      <div class="atmosphere__text">
+        <p class="section-eyebrow">наша філософія</p>
+        <h2 class="section-title">Магія<br><em>в кожній крихті</em></h2>
+        <p class="atmosphere__body">Ми вважаємо, що справжня їжа — це та, що приготована з турботою. Кожна буханка хліба, кожен круасан і кожна булочка — це не просто продукт, це маленька історія, в якій є час, тепло та увага до деталей.</p>
+        <p class="atmosphere__body">Завітайте до нас уранці, коли аромат свіжоспеченого хліба розливається по вулиці. Це — ПОКУТСЬКА ПЕКАРНЯ.</p>
+        <a href="#about" class="btn btn--outline-dark">Дізнатися більше</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== ADVANTAGES ===================== -->
+  <section class="advantages reveal">
+    <div class="container">
+      <p class="section-eyebrow center">Чому обирають нас</p>
+      <h2 class="section-title center">Наші переваги</h2>
+
+      <div class="advantages__grid">
+
+        <div class="adv-card reveal">
+          <div class="adv-card__icon">🌾</div>
+          <h3 class="adv-card__title">Свіжа випічка щодня</h3>
+          <p class="adv-card__text">Ми починаємо о 4-й ранку, щоб о 8-й ранку перші буханки вже лежали на полиці ще теплі.</p>
+        </div>
+
+        <div class="adv-card reveal">
+          <div class="adv-card__icon">🌿</div>
+          <h3 class="adv-card__title">Натуральні інгредієнти</h3>
+          <p class="adv-card__text">Жодних консервантів, барвників чи підсилювачів смаку. Тільки чисті, перевірені продукти.</p>
+        </div>
+
+        <div class="adv-card reveal">
+          <div class="adv-card__icon">📜</div>
+          <h3 class="adv-card__title">Традиційні рецепти</h3>
+          <p class="adv-card__text">Ми зберігаємо рецепти, що передавались поколіннями, і додаємо до них сучасний підхід.</p>
+        </div>
+
+        <div class="adv-card reveal">
+          <div class="adv-card__icon">☕</div>
+          <h3 class="adv-card__title">Затишна атмосфера</h3>
+          <p class="adv-card__text">Наша пекарня — місце, де зупиняється час. Прийдіть, відпочиньте, насолодіться.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GALLERY ===================== -->
+  <section class="gallery reveal" id="gallery">
+    <div class="container">
+      <p class="section-eyebrow center">Наш світ</p>
+      <h2 class="section-title center">Галерея</h2>
+      <p class="section-sub center">Погляньте на те, що ми робимо щодня з любов'ю</p>
+
+      <div class="gallery__grid">
+        <!-- Замініть: images/gallery-1.jpg ... gallery-8.jpg -->
+        <div class="gallery__item reveal" data-src="images/gallery-1.jpg">
+          <img src="galere1.jpg" alt="Галерея 1" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-2.jpg">
+          <img src="galere2.jpg" alt="Галерея 2" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-3.jpg">
+          <img src="galere3.jpg" alt="Галерея 3" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-4.jpg">
+          <img src="galere4.jpg" alt="Галерея 4" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-5.jpg">
+          <img src="galere5.jpg" alt="Галерея 5" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-6.jpg">
+          <img src="galere6.jpg" alt="Галерея 6" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-7.jpg">
+          <img src="galere7.jpg" alt="Галерея 7" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+        <div class="gallery__item reveal" data-src="images/gallery-8.jpg">
+          <img src="galere8.jpg" alt="Галерея 8" />
+          <div class="gallery__overlay"><span>↗</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightboxClose">✕</button>
+    <button class="lightbox__prev" id="lightboxPrev">‹</button>
+    <button class="lightbox__next" id="lightboxNext">›</button>
+    <div class="lightbox__img-wrap">
+      <img src="" alt="" id="lightboxImg" />
+    </div>
+  </div>
+
+  <!-- ===================== REVIEWS ===================== -->
+  <section class="reviews reveal" id="reviews">
+    <div class="container">
+      <p class="section-eyebrow center">Що кажуть гості</p>
+      <h2 class="section-title center">Відгуки</h2>
+
+      <div class="reviews__slider" id="reviewsSlider">
+        <div class="reviews__track" id="reviewsTrack">
+
+          <!-- Review 1 -->
+          <div class="review-card">
+            <div class="review-card__stars">★★★★★</div>
+            <p class="review-card__text">«Круасани тут — найкращі, що я куштувала в Україні. Хрусткі, ароматні, з ніжним маслом. Щоранку заходжу і щоразу повертаюся за добавкою. ПОКУТСЬКА ПЕКАРНЯ — це моє місце сили!»</p>
+            <div class="review-card__author">
+              <div class="review-card__avatar">О</div>
+              <div>
+                <strong>Оксана Мельник</strong>
+                <small>постійна гостя</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="review-card">
+            <div class="review-card__stars">★★★★★</div>
+            <p class="review-card__text">«Замовляв хліб на заквасці для нашого ресторану. Гості одразу запитують, де ми берємо такий хліб. Запах, текстура, смак — все на вищому рівні. Тепер тільки звідси!»</p>
+            <div class="review-card__author">
+              <div class="review-card__avatar">І</div>
+              <div>
+                <strong>Іван Коваль</strong>
+                <small>власник ресторану</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="review-card">
+            <div class="review-card__stars">★★★★★</div>
+            <p class="review-card__text">«Брала пироги на сімейне свято — всі були у захваті! Начинки соковиті, тісто м'яке, подача гарна. Атмосфера самої пекарні теж чарівна — відчуваєш справжній домашній затишок.»</p>
+            <div class="review-card__author">
+              <div class="review-card__avatar">М</div>
+              <div>
+                <strong>Марія Гнатюк</strong>
+                <small>гостя з Коломиї</small>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Dots -->
+      <div class="reviews__dots" id="reviewsDots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta reveal">
+    <div class="cta__bg">
+      <!-- Замініть: images/cta-bg.jpg -->
+      <img src="cta.png" alt="Пекарня" class="cta__img" />
+      <div class="cta__overlay"></div>
+    </div>
+    <div class="cta__content container">
+      <p class="section-eyebrow light">не відкладайте</p>
+      <h2 class="cta__title">Завітайте до ПОКУТСЬКОЇ ПЕКАРНІ<br>та відчуйте смак справжньої випічки</h2>
+      <p class="cta__sub">Ми відчиняємо двері щодня о 7:00 ранку і чекаємо на вас з теплим хлібом у руках</p>
+      <a href="#contacts" class="btn btn--light">Зв'язатися з нами</a>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACTS ===================== -->
+  <section class="contacts reveal" id="contacts">
+    <div class="container">
+      <p class="section-eyebrow center">Знайдіть нас</p>
+      <h2 class="section-title center">Контакти</h2>
+
+      <div class="contacts__grid">
+
+        <!-- Contact Info -->
+        <div class="contacts__info">
+
+          <div class="contact-item">
+            <div class="contact-item__icon">📍</div>
+            <div>
+              <strong>Адреса</strong>
+              <p>вул. Станіславська, 122, м. Городенка<br>Івано-Франківська обл., 78100</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item__icon">📞</div>
+            <div>
+              <strong>Телефон</strong>
+              <p><a href="tel:+380501234567">+38 (096) 004-55-25</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item__icon">✉️</div>
+            <div>
+              <strong>Email</strong>
+              <p><a href="mailto:hello@pokutska.ua">pokunska@gmail/com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item__icon">🕐</div>
+            <div>
+              <strong>Графік роботи</strong>
+              <p>Пн–Пт: 07:00 – 20:00<br>Сб–Нд: 07:00 – 19:00</p>
+            </div>
+          </div>
+
+          <!-- Соцмережі -->
+          <div class="contacts__social">
+            <a href="https://www.instagram.com/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.facebook.com/" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/" class="social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Map placeholder -->
+        <div class="contacts__map">
+          <!-- Тут можна вставити iframe Google Maps -->
+          <div class="map-placeholder">
+            <div class="map-placeholder__inner">
+              <span class="map-placeholder__icon">🗺️</span>
+              <p>ПОКУТСЬКА ПЕКАРНЯ</p>
+              <small>вул. Станіславська, 122, м. Городенка</small>
+              <a href="https://www.google.com/maps/place/%22%D0%9F%D0%BE%D0%BA%D1%83%D1%82%D1%81%D1%8C%D0%BA%D0%B0+%D0%BF%D0%B5%D0%BA%D0%B0%D1%80%D0%BD%D1%8F%22/@48.6915258,25.4684714,17z/data=!4m16!1m9!3m8!1s0x4731470a36ef8889:0xe3bb84a94c89cf31!2zItCf0L7QutGD0YLRgdGM0LrQsCDQv9C10LrQsNGA0L3RjyI!8m2!3d48.6915258!4d25.4710463!9m1!1b1!16s%2Fg%2F11g9w2h4h1!3m5!1s0x4731470a36ef8889:0xe3bb84a94c89cf31!8m2!3d48.6915258!4d25.4710463!16s%2Fg%2F11g9w2h4h1?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="btn btn--sm" style="margin-top:1rem">Відкрити карту</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contacts__form">
+          <h3 class="form-title">Надішліть повідомлення</h3>
+          <form class="form" id="contactForm" data-endpoint="https://formspree.io/f/mkokrdgv" novalidate>
+
+            <div class="form-group">
+              <label for="name">Ваше ім'я *</label>
+              <input type="text" id="name" name="name" placeholder="Наприклад: Марія" />
+              <span class="form-error" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Телефон *</label>
+              <input type="tel" id="phone" name="phone" placeholder="+38 (0__) ___-__-__" />
+              <span class="form-error" id="phoneError"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Повідомлення</label>
+              <textarea id="message" name="message" rows="4" placeholder="Напишіть ваше запитання або побажання..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">Надіслати</button>
+
+            <!-- Success message -->
+            <div class="form-success" id="formSuccess" hidden>
+              ✓ Дякуємо! Ми зв'яжемося з вами найближчим часом.
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container footer__grid">
+
+      <div class="footer__brand">
+        <a href="#home" class="footer__logo">
+          <span class="logo-icon">✦</span>
+          <span>ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></span>
+        </a>
+        <p class="footer__tagline">Свіжа випічка щодня.<br>З любов'ю до кожної крихти.</p>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__nav">
+        <h4>Навігація</h4>
+        <ul>
+          <li><a href="#home">Головна</a></li>
+          <li><a href="#about">Про нас</a></li>
+          <li><a href="#menu">Асортимент</a></li>
+          <li><a href="#bestsellers">Хіти продажу</a></li>
+          <li><a href="#gallery">Галерея</a></li>
+          <li><a href="#contacts">Контакти</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__contact">
+        <h4>Контакти</h4>
+        <p>вул. Станіславська,122<br>м. Городенка, 78100</p>
+        <p><a href="tel:+380501234567">+38 (096) 004-55-25</a></p>
+        <p><a href="mailto:hello@pokutska.ua">pokunska@gmail/com</a></p>
+        <p>Пн–Пт: 07:00 – 20:00<br>Сб–Нд: 07:00 – 19:00</p>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom container">
+      <p>© 2025 ПОКУТСЬКА ПЕКАРНЯ. Усі права захищено.</p>
+      <p>Зроблено з ♥ на Покутті</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top" id="scrollTop" aria-label="Вгору">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
