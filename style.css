@@ -817,6 +817,9 @@ ul { list-style: none; }
   color: var(--brown-dark);
   line-height: 1.7;
   margin-bottom: 1.75rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .review-card__author {
   display: flex;
@@ -1334,6 +1337,7 @@ ul { list-style: none; }
   /* --- MENU CARDS --- */
   /* Горизонтальний скрол замість сітки — більш "мобільний" UX */
   .menu__grid {
+    --menu-card-w: min(82vw, 320px);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -1346,18 +1350,19 @@ ul { list-style: none; }
     scroll-behavior: smooth;
     scrollbar-width: none;
     touch-action: pan-x;
+    scroll-padding-inline: calc((100vw - var(--menu-card-w)) / 2);
     /* Виходимо за контейнер для повноширинного скролу */
     margin-left: calc(-1 * clamp(1rem, 4vw, 2.5rem));
     margin-right: calc(-1 * clamp(1rem, 4vw, 2.5rem));
-    padding-left: clamp(1rem, 4vw, 2.5rem);
-    padding-right: clamp(1rem, 4vw, 2.5rem);
+    padding-left: calc((100vw - var(--menu-card-w)) / 2);
+    padding-right: calc((100vw - var(--menu-card-w)) / 2);
   }
   .menu__grid::-webkit-scrollbar { display: none; }
   .menu-card {
-    min-width: min(82vw, 320px);
-    width: min(82vw, 320px);
+    min-width: var(--menu-card-w);
+    width: var(--menu-card-w);
     flex-shrink: 0;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
   .menu-card__img-wrap { height: 180px; }
 
@@ -1394,6 +1399,17 @@ ul { list-style: none; }
     scroll-snap-align: start;
   }
   .product-card__img-wrap { height: 170px; }
+  .product-card__img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream);
+  }
+  .product-card__img {
+    object-fit: contain;
+    object-position: center;
+    padding: 0.45rem;
+  }
 
   /* --- ATMOSPHERE --- */
   .atmosphere__photos {
@@ -1438,7 +1454,12 @@ ul { list-style: none; }
     min-width: 100%;
     padding: 1.75rem 1.5rem;
   }
-  .review-card__text { font-size: 1rem; }
+  .review-card__text {
+    font-size: 1rem;
+    line-height: 1.65;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
   .reviews__dots { margin-top: 1.75rem; }
 
   /* --- CTA --- */

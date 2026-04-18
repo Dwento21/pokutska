@@ -151,6 +151,52 @@ document.addEventListener('DOMContentLoaded', () => {
   let startX = 0;
   const totalSlides = dots.length;
 
+  function sanitizeText(value = '') {
+    return String(value).replace(/[<>]/g, '');
+  }
+
+  function starRow(ratingValue) {
+    const rating = Math.max(1, Math.min(5, Math.round(Number(ratingValue) || 5)));
+    return '★★★★★'.slice(0, rating);
+  }
+
+  async function loadExternalReviews() {
+    if (!track) return;
+    const endpoint = (track.dataset.reviewsEndpoint || '').trim();
+    if (!endpoint) return;
+
+    try {
+      const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+      if (!response.ok) return;
+      const payload = await response.json();
+      if (!Array.isArray(payload) || payload.length === 0) return;
+
+      const cards = track.querySelectorAll('.review-card');
+      cards.forEach((card, i) => {
+        const item = payload[i];
+        if (!item) return;
+
+        const textEl = card.querySelector('.review-card__text');
+        const starsEl = card.querySelector('.review-card__stars');
+        const strongEl = card.querySelector('.review-card__author strong');
+        const smallEl = card.querySelector('.review-card__author small');
+        const avatarEl = card.querySelector('.review-card__avatar');
+
+        const author = sanitizeText(item.author || 'Гість');
+        const reviewText = sanitizeText(item.text || '');
+        const subtitle = sanitizeText(item.subtitle || 'відгук Google');
+
+        if (starsEl) starsEl.textContent = starRow(item.rating);
+        if (textEl) textEl.textContent = `«${reviewText}»`;
+        if (strongEl) strongEl.textContent = author;
+        if (smallEl) smallEl.textContent = subtitle;
+        if (avatarEl) avatarEl.textContent = author.charAt(0).toUpperCase() || 'Г';
+      });
+    } catch (_) {
+      // Якщо endpoint недоступний, залишаємо локальні відгуки з HTML
+    }
+  }
+
   function goToSlide(index) {
     if (!track) return;
     currentSlide = (index + totalSlides) % totalSlides;
@@ -174,11 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!track) return;
     track.style.flexDirection = 'row';
     const cards = track.querySelectorAll('.review-card');
-    const isMob = window.innerWidth <= 768;
-    const sliderW = track.parentElement.offsetWidth;
-
     cards.forEach(card => {
-      card.style.minWidth = isMob ? `${sliderW}px` : '';
+      card.style.minWidth = '';
       card.style.display = '';
     });
     goToSlide(currentSlide);
@@ -211,7 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   window.addEventListener('resize', initSlider, { passive: true });
-  initSlider();
+  loadExternalReviews().finally(() => {
+    initSlider();
+  });
   startAutoplay();
 
   
