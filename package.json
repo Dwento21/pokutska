@@ -1,0 +1,9 @@
+{
+  "name": "pokutska-bakery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website and basic admin panel for Pokutska bakery.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

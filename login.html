@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Вхід | ПОКУТСЬКА ПЕКАРНЯ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-shell">
+    <div class="container" style="max-width: 400px; margin-top: 100px;">
+        <h1 class="section-title center">Вхід</h1>
+        <form id="loginForm" class="form">
+            <div class="form-group">
+                <label for="password">Пароль адміністратора</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full">Увійти</button>
+            <p id="loginStatus" class="status-line" style="text-align: center; margin-top: 10px;"></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password })
+            });
+
+            if (res.ok) {
+                // Якщо сервер дав добро, переходимо в адмінку
+                window.location.href = '/admin.html';
+            } else {
+                // Якщо помилка (статус 401)
+                document.getElementById('loginStatus').textContent = 'Невірний пароль!';
+                document.getElementById('password').value = '';
+            }
+        });
+    </script>
+</body>
+</html>

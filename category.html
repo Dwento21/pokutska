@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Категорія | ПОКУТСЬКА ПЕКАРНЯ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header scrolled">
+    <div class="header__inner container">
+      <a href="index.html#home" class="header__logo" aria-label="Покутська пекарня">
+        <img src="assets/logo.png" alt="Покутська пекарня" class="site-logo" />
+      </a>
+      <nav class="header__nav">
+        <ul class="nav__list">
+          <li><a href="index.html#home" class="nav__link">Головна</a></li>
+          <li><a href="index.html#menu" class="nav__link">Асортимент</a></li>
+          <li><a href="index.html#contacts" class="nav__link">Контакти</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="index.html#contacts" class="btn btn--outline">Замовити</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <div class="container page-hero__top">
+        <div class="page-hero__text">
+          <p class="section-eyebrow" id="categoryEyebrow">Асортимент</p>
+          <h1 class="section-title" id="categoryTitle">Категорія</h1>
+          <p class="section-sub" id="categoryDescription">Добірка виробів із фото та детальним описом.</p>
+        </div>
+        <a href="index.html#menu" class="btn btn--outline-dark">До всіх категорій</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        
+        <div class="category-nav">
+          <a href="category.html?category=bread" class="category-nav__link" data-category="bread">Хліб</a>
+          <a href="category.html?category=croissants" class="category-nav__link" data-category="croissants">Круасани</a>
+          <a href="category.html?category=buns" class="category-nav__link" data-category="buns">Булочки</a>
+          <a href="category.html?category=sweets" class="category-nav__link" data-category="sweets">Солодка випічка</a>
+          <a href="category.html?category=pies" class="category-nav__link" data-category="pies">Пироги</a>
+          <a href="category.html?category=seasonal" class="category-nav__link" data-category="seasonal">Сезонні новинки</a>
+        </div>
+        <div class="products-list" id="categoryProducts">
+          <div class="empty-state">Завантажуємо товари...</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="category.js"></script>
+</body>
+</html>

@@ -71,6 +71,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const heroNewsText = document.getElementById('heroNewsText');
+  
+  const heroNewsImg = document.getElementById('heroNewsImg'); // Знаходимо елемент картинки
+
+  async function loadHeroNews() {
+    if (!heroNewsText) return;
+    const endpoint = (heroNewsText.dataset.newsEndpoint || '').trim();
+    if (!endpoint || window.location.protocol === 'file:') return;
+
+    try {
+      const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+      if (!response.ok) return;
+      const payload = await response.json();
+      
+      // Відображаємо текст
+      if (payload?.text) {
+        heroNewsText.textContent = payload.text;
+      }
+      
+      // Відображаємо фото новини
+      if (payload?.image && heroNewsImg) {
+        heroNewsImg.src = payload.image;
+        heroNewsImg.style.display = 'block'; 
+      }
+    } catch (_) {
+      // Залишається текст за замовчуванням
+    }
+  }
+  
+  loadHeroNews();
+
   
   const revealItems = document.querySelectorAll('.reveal');
 
@@ -91,176 +122,132 @@ document.addEventListener('DOMContentLoaded', () => {
   revealItems.forEach(el => revealObserver.observe(el));
 
   
-  const galleryItems = document.querySelectorAll('.gallery__item');
-  const lightbox     = document.getElementById('lightbox');
-  const lightboxImg  = document.getElementById('lightboxImg');
-  const lightboxClose = document.getElementById('lightboxClose');
-  const lightboxPrev  = document.getElementById('lightboxPrev');
-  const lightboxNext  = document.getElementById('lightboxNext');
-
-  let currentIndex = 0;
-  const srcs = Array.from(galleryItems).map(el => el.dataset.src);
-
-  function openLightbox(index) {
-    currentIndex = index;
-    lightboxImg.src = srcs[currentIndex];
-    lightboxImg.alt = `Галерея ${currentIndex + 1}`;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => { lightboxImg.src = ''; }, 300);
-  }
-
-  function showPrev() {
-    currentIndex = (currentIndex - 1 + srcs.length) % srcs.length;
-    lightboxImg.src = srcs[currentIndex];
-  }
-
-  function showNext() {
-    currentIndex = (currentIndex + 1) % srcs.length;
-    lightboxImg.src = srcs[currentIndex];
-  }
-
-  galleryItems.forEach((item, i) => {
-    item.addEventListener('click', () => openLightbox(i));
-  });
-
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightboxPrev.addEventListener('click', showPrev);
-  lightboxNext.addEventListener('click', showNext);
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft')  showPrev();
-    if (e.key === 'ArrowRight') showNext();
-  });
-
-  
   const track = document.getElementById('reviewsTrack');
-  const dots  = document.querySelectorAll('.dot');
+  const dotsWrap = document.getElementById('reviewsDots');
+  const reviewsPrev = document.getElementById('reviewsPrev');
+  const reviewsNext = document.getElementById('reviewsNext');
 
   let currentSlide = 0;
   let autoplayTimer;
   let startX = 0;
-  const totalSlides = dots.length;
 
   function sanitizeText(value = '') {
-    return String(value).replace(/[<>]/g, '');
+    return String(value)
+      .replace(/[<>]/g, '')
+      .replace(/ /g, ' ')
+      .replace(/[ -​  　]/g, ' ')
+      .replace(/s+/g, ' ')
+      .trim();
   }
 
-  function starRow(ratingValue) {
-    const rating = Math.max(1, Math.min(5, Math.round(Number(ratingValue) || 5)));
-    return '★★★★★'.slice(0, rating);
+  function normalizeReviewText(value = '') {
+    return sanitizeText(value).replace(/(S{28})(?=S)/g, '$1​');
   }
 
-  async function loadExternalReviews() {
+  function getVisibleReviews() {
+    if (window.innerWidth <= 768) return 1;
+    if (window.innerWidth <= 1100) return 2;
+    return 3;
+  }
+
+  function getMaxSlide() {
+    if (!track) return 0;
+    const cards = track.querySelectorAll('.review-card').length;
+    return Math.max(0, cards - getVisibleReviews());
+  }
+
+  function setReviewCardWidths() {
     if (!track) return;
-    const endpoint = (track.dataset.reviewsEndpoint || '').trim();
-    if (!endpoint) return;
+    const visible = getVisibleReviews();
+    const gap = parseFloat(window.getComputedStyle(track).gap || '0') || 0;
+    const width = (track.parentElement.getBoundingClientRect().width - gap * (visible - 1)) / visible;
+    track.querySelectorAll('.review-card').forEach((card) => {
+      card.style.flexBasis = `${width}px`;
+    });
+  }
 
-    try {
-      const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
-      if (!response.ok) return;
-      const payload = await response.json();
-      if (!Array.isArray(payload) || payload.length === 0) return;
+  function buildReviewDots() {
+    if (!dotsWrap || !track) return;
+    const total = getMaxSlide() + 1;
+    dotsWrap.innerHTML = Array.from({ length: total }, (_, i) => (
+      `<button class="dot" type="button" data-index="${i}" aria-label="Показати відгуки ${i + 1}"></button>`
+    )).join('');
 
-      const cards = track.querySelectorAll('.review-card');
-      cards.forEach((card, i) => {
-        const item = payload[i];
-        if (!item) return;
-
-        const textEl = card.querySelector('.review-card__text');
-        const starsEl = card.querySelector('.review-card__stars');
-        const strongEl = card.querySelector('.review-card__author strong');
-        const smallEl = card.querySelector('.review-card__author small');
-        const avatarEl = card.querySelector('.review-card__avatar');
-
-        const author = sanitizeText(item.author || 'Гість');
-        const reviewText = sanitizeText(item.text || '');
-        const subtitle = sanitizeText(item.subtitle || 'відгук Google');
-
-        if (starsEl) starsEl.textContent = starRow(item.rating);
-        if (textEl) textEl.textContent = `«${reviewText}»`;
-        if (strongEl) strongEl.textContent = author;
-        if (smallEl) smallEl.textContent = subtitle;
-        if (avatarEl) avatarEl.textContent = author.charAt(0).toUpperCase() || 'Г';
+    dotsWrap.querySelectorAll('.dot').forEach((dot) => {
+      dot.addEventListener('click', () => {
+        goToReviewSlide(Number(dot.dataset.index));
+        restartReviewAutoplay();
       });
-    } catch (_) {
-      // Якщо endpoint недоступний, залишаємо локальні відгуки з HTML
-    }
+    });
   }
 
-  function goToSlide(index) {
+  function updateReviewDots() {
+    if (!dotsWrap) return;
+    dotsWrap.querySelectorAll('.dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function goToReviewSlide(index) {
     if (!track) return;
-    currentSlide = (index + totalSlides) % totalSlides;
-    const cards = track.querySelectorAll('.review-card');
-    if (cards.length === 0) return;
-    const isMob = window.innerWidth <= 768;
-    const sliderW = track.parentElement.offsetWidth;
-    let offset;
+    const maxSlide = getMaxSlide();
+    currentSlide = ((index % (maxSlide + 1)) + (maxSlide + 1)) % (maxSlide + 1);
 
-    if (isMob) {
-      offset = currentSlide * sliderW;
-    } else {
-      const cardW = (sliderW - 28 * 2) / 3;
-      offset = currentSlide * (cardW + 28);
-    }
-
+    const firstCard = track.querySelector('.review-card');
+    if (!firstCard) return;
+    const gap = parseFloat(window.getComputedStyle(track).gap || '0') || 0;
+    const offset = currentSlide * (firstCard.getBoundingClientRect().width + gap);
     track.style.transform = `translateX(-${offset}px)`;
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+    updateReviewDots();
   }
-  function initSlider() {
+
+  function initReviewSlider() {
     if (!track) return;
-    track.style.flexDirection = 'row';
-    const cards = track.querySelectorAll('.review-card');
-    cards.forEach(card => {
-      card.style.minWidth = '';
-      card.style.display = '';
+    track.querySelectorAll('.review-card__text').forEach((el) => {
+      el.textContent = normalizeReviewText(el.textContent || '');
     });
-    goToSlide(currentSlide);
+    setReviewCardWidths();
+    buildReviewDots();
+    currentSlide = Math.min(currentSlide, getMaxSlide());
+    goToReviewSlide(currentSlide);
   }
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      goToSlide(+dot.dataset.index);
-      restartAutoplay();
-    });
-  });
-  function startAutoplay() {
-    autoplayTimer = setInterval(() => {
-      goToSlide(currentSlide + 1);
-    }, 4500);
-  }
-  function restartAutoplay() {
+
+  function startReviewAutoplay() {
     clearInterval(autoplayTimer);
-    startAutoplay();
+    autoplayTimer = setInterval(() => {
+      goToReviewSlide(currentSlide + 1);
+    }, 5200);
   }
+
+  function restartReviewAutoplay() {
+    startReviewAutoplay();
+  }
+
   if (track) {
+    reviewsPrev?.addEventListener('click', () => {
+      goToReviewSlide(currentSlide - 1);
+      restartReviewAutoplay();
+    });
+    reviewsNext?.addEventListener('click', () => {
+      goToReviewSlide(currentSlide + 1);
+      restartReviewAutoplay();
+    });
     track.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
     }, { passive: true });
     track.addEventListener('touchend', (e) => {
       const diff = startX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 45) {
-        goToSlide(diff > 0 ? currentSlide + 1 : currentSlide - 1);
-        restartAutoplay();
+        goToReviewSlide(diff > 0 ? currentSlide + 1 : currentSlide - 1);
+        restartReviewAutoplay();
       }
     });
+    window.addEventListener('resize', initReviewSlider, { passive: true });
+    initReviewSlider();
+    startReviewAutoplay();
   }
-  window.addEventListener('resize', initSlider, { passive: true });
-  loadExternalReviews().finally(() => {
-    initSlider();
-  });
-  startAutoplay();
 
-  
-  const contactForm = document.getElementById('contactForm');
+    const contactForm = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
 
   if (contactForm) {

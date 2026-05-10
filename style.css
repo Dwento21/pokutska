@@ -5,15 +5,15 @@
 
 /* ---- CSS Variables ---- */
 :root {
-  --cream:       #faf6ef;
-  --cream-dark:  #f0e8d8;
-  --beige:       #e8d5b7;
-  --brown-light: #c4956a;
-  --brown:       #8b5e3c;
-  --brown-dark:  #5c3a1e;
-  --burgundy:    #7b2d3f;
-  --burgundy-light: #a04055;
-  --charcoal:    #2c2117;
+  --cream:       #fff8ed;
+  --cream-dark:  #f4e4c9;
+  --beige:       #e7c58e;
+  --brown-light: #c78322;
+  --brown:       #8a4a13;
+  --brown-dark:  #4b230d;
+  --burgundy:    #7f070d;
+  --burgundy-light: #a3161e;
+  --charcoal:    #24120d;
   --white:       #ffffff;
   --text:        #3a2a1a;
   --text-muted:  #7a6550;
@@ -26,9 +26,9 @@
   --radius-lg:   28px;
   --radius-xl:   40px;
 
-  --shadow-sm:   0 2px 12px rgba(92,58,30,0.08);
-  --shadow-md:   0 8px 32px rgba(92,58,30,0.14);
-  --shadow-lg:   0 20px 60px rgba(92,58,30,0.18);
+  --shadow-sm:   0 2px 12px rgba(75,35,13,0.08);
+  --shadow-md:   0 8px 32px rgba(75,35,13,0.14);
+  --shadow-lg:   0 20px 60px rgba(75,35,13,0.18);
 
   --transition:  0.35s cubic-bezier(0.4, 0, 0.2, 1);
   --max-w:       1200px;
@@ -201,8 +201,42 @@ ul { list-style: none; }
 .header__logo {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
   flex-shrink: 0;
+  position: relative; /* Важливо для світіння */
+}
+
+/* Створюємо м'яке кремове світіння під логотипом */
+.header__logo::before {
+  content: '';
+  position: absolute;
+  top: -25px; bottom: -25px; left: -25px; right: -25px;
+  background: radial-gradient(circle, rgba(251,248,244, 0.85) 15%, rgba(251,248,244, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+.btn--danger {
+  background: #e05555;
+  color: white;
+  margin-left: auto; /* Відсуваємо кнопку вправо */
+}
+
+.btn--danger:hover {
+  background: #c24444;
+}
+
+
+/* Коли шапка при скролі стає світлою, ми вимикаємо світіння */
+.header.scrolled .header__logo::before {
+  opacity: 0;
+}
+.site-logo {
+  width: clamp(132px, 14vw, 205px);
+  max-height: 92px;
+  height: auto;
+  object-fit: contain;
+  /* Ця магія робить білий фон картинки прозорим */
+  mix-blend-mode: multiply; 
 }
 .logo-icon {
   font-size: 1.4rem;
@@ -279,7 +313,7 @@ ul { list-style: none; }
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: center;
-  /* Замість цього зображення вставте images/hero-bread.jpg */
+  /* Замість цього зображення вставте imagines/hero.png */
   background: linear-gradient(135deg, #c4956a 0%, #8b5e3c 50%, #5c3a1e 100%);
 }
 .hero__overlay {
@@ -295,7 +329,16 @@ ul { list-style: none; }
 .hero__content {
   position: relative;
   z-index: 2;
-  max-width: 680px;
+  max-width: var(--max-w);
+}
+.hero__main {
+  display: grid;
+  grid-template-columns: minmax(0, 620px) minmax(360px, 460px);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.hero__copy {
+  min-width: 0;
 }
 .hero__eyebrow {
   font-family: var(--font-body);
@@ -309,7 +352,7 @@ ul { list-style: none; }
 }
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-size: clamp(3rem, 6.6vw, 5.9rem);
   font-weight: 700;
   line-height: 0.95;
   color: var(--white);
@@ -338,6 +381,39 @@ ul { list-style: none; }
   flex-wrap: wrap;
   opacity: 0;
   animation: fadeUp 0.8s 0.9s forwards;
+}
+.hero-news {
+  align-self: center;
+  min-height: 250px;
+  padding: clamp(1.7rem, 3vw, 2.35rem);
+  border: 1px solid rgba(242,167,27,0.36);
+  border-left: 5px solid rgba(242,167,27,0.95);
+  border-radius: var(--radius-md);
+  background: rgba(35,27,22,0.5);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(20,13,7,0.28);
+  color: var(--white);
+  opacity: 0;
+  animation: fadeUp 0.8s 0.85s forwards;
+}
+.hero-news__label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--beige);
+  margin-bottom: 0.85rem;
+}
+.hero-news__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  line-height: 1.08;
+  margin-bottom: 1rem;
+}
+.hero-news__text {
+  color: rgba(255,255,255,0.84);
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  line-height: 1.7;
 }
 
 /* Scroll indicator */
@@ -404,7 +480,7 @@ ul { list-style: none; }
   height: 520px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  /* Замінити: images/about-bakery.jpg */
+  /* Замінити: imagines/about.png */
   background: linear-gradient(135deg, #e8d5b7, #c4956a);
 }
 .about__img-decor {
@@ -585,53 +661,8 @@ ul { list-style: none; }
 .product-card__footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
-.product-card__price {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--burgundy);
-}
-
-/* ================================================
-   ATMOSPHERE
-   ================================================ */
-.atmosphere {
-  padding: clamp(5rem, 10vw, 9rem) 0;
-  background: var(--white);
-}
-.atmosphere__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--gap);
-  align-items: center;
-}
-.atmosphere__photos {
-  position: relative;
-  height: 560px;
-}
-.atm-img {
-  position: absolute;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  background: linear-gradient(135deg, var(--beige), var(--brown-light));
-}
-.atm-img--top {
-  top: 0; left: 0;
-  width: 65%; height: 60%;
-}
-.atm-img--bottom {
-  bottom: 0; right: 0;
-  width: 62%; height: 58%;
-}
-.atmosphere__text { padding-left: clamp(0px, 3vw, 2.5rem); }
-.atmosphere__body {
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-  font-size: 0.97rem;
-}
-.atmosphere__text .btn { margin-top: 1.5rem; }
 
 /* ================================================
    ADVANTAGES
@@ -679,191 +710,157 @@ ul { list-style: none; }
 }
 
 /* ================================================
-   GALLERY
-   ================================================ */
-.gallery {
-  padding: clamp(5rem, 10vw, 9rem) 0;
-  background: var(--cream);
-}
-.gallery__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto;
-  gap: 1rem;
-}
-/* Деякі елементи займають 2 колонки для masonry-ефекту */
-.gallery__item:nth-child(1),
-.gallery__item:nth-child(6) { grid-column: span 2; }
-
-.gallery__item {
-  position: relative;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--beige);
-}
-.gallery__item img {
-  width: 100%;
-  height: 100%;
-  min-height: 200px;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-  background: linear-gradient(135deg, var(--cream-dark), var(--beige));
-}
-.gallery__item:hover img { transform: scale(1.07); }
-.gallery__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(92,58,30,0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition);
-}
-.gallery__overlay span {
-  color: var(--white);
-  font-size: 2rem;
-  font-weight: 300;
-}
-.gallery__item:hover .gallery__overlay { opacity: 1; }
-
-/* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(20,13,7,0.95);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.lightbox.open {
-  opacity: 1;
-  pointer-events: all;
-}
-.lightbox__img-wrap {
-  max-width: 90vw;
-  max-height: 85vh;
-}
-.lightbox__img-wrap img {
-  max-width: 90vw;
-  max-height: 85vh;
-  border-radius: var(--radius-md);
-  object-fit: contain;
-}
-.lightbox__close,
-.lightbox__prev,
-.lightbox__next {
-  position: absolute;
-  background: rgba(255,255,255,0.12);
-  border: none;
-  color: var(--white);
-  cursor: pointer;
-  border-radius: 50%;
-  width: 48px; height: 48px;
-  font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--transition);
-}
-.lightbox__close:hover,
-.lightbox__prev:hover,
-.lightbox__next:hover { background: rgba(255,255,255,0.25); }
-.lightbox__close { top: 1.5rem; right: 1.5rem; }
-.lightbox__prev { left: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 1.8rem; }
-.lightbox__next { right: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 1.8rem; }
-
-/* ================================================
    REVIEWS
    ================================================ */
 .reviews {
   padding: clamp(5rem, 10vw, 9rem) 0;
-  background: var(--cream-dark);
+  background:
+    radial-gradient(circle at top left, rgba(127,7,13,0.08), transparent 34rem),
+    linear-gradient(135deg, var(--cream-dark), var(--cream));
   overflow: hidden;
+}
+.reviews__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
+}
+.reviews__header .section-title {
+  margin-bottom: 0;
+}
+.reviews__controls {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+.reviews__nav {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(127,7,13,0.22);
+  background: var(--white);
+  color: var(--burgundy);
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), background var(--transition), color var(--transition), border-color var(--transition);
+}
+.reviews__nav:hover {
+  transform: translateY(-2px);
+  background: var(--burgundy);
+  color: var(--white);
+  border-color: var(--burgundy);
 }
 .reviews__slider {
   overflow: hidden;
   position: relative;
 }
 .reviews__track {
+  --review-gap: 1.25rem;
   display: flex;
-  gap: 1.75rem;
-  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-  width: 100%;
+  gap: var(--review-gap);
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
 }
 .review-card {
-  min-width: calc(33.333% - 1.2rem);
-  flex-shrink: 0;
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
+  flex: 0 0 calc((100% - (var(--review-gap) * 2)) / 3);
+  min-height: 330px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(242,167,27,0.28);
+  border-radius: var(--radius-md);
+  padding: clamp(1.35rem, 2.4vw, 2rem);
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
-.review-card__stars {
-  color: var(--brown-light);
-  font-size: 1.1rem;
-  letter-spacing: 0.1rem;
-  margin-bottom: 1.25rem;
-}
-.review-card__text {
+.review-card::before {
+  content: '“';
+  position: absolute;
+  top: -0.45rem;
+  right: 1.2rem;
   font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--brown-dark);
-  line-height: 1.7;
-  margin-bottom: 1.75rem;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  font-size: 7rem;
+  line-height: 1;
+  color: rgba(127,7,13,0.08);
+  pointer-events: none;
 }
-.review-card__author {
+.review-card__top {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
 }
 .review-card__avatar {
-  width: 44px; height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: var(--burgundy);
+  background: linear-gradient(135deg, var(--burgundy), var(--brown-light));
   color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
   flex-shrink: 0;
 }
-.review-card__author strong {
+.review-card__top strong {
   display: block;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--charcoal);
+  line-height: 1.2;
 }
-.review-card__author small {
+.review-card__top small {
+  display: block;
   font-size: 0.78rem;
   color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+.review-card__stars {
+  color: var(--brown-light);
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+.review-card__text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.03rem, 1.6vw, 1.16rem);
+  color: var(--brown-dark);
+  line-height: 1.62;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  position: relative;
+  z-index: 1;
 }
 .reviews__dots {
   display: flex;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 2.5rem;
+  gap: 0.55rem;
+  margin-top: 2rem;
 }
 .dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--beige);
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(127,7,13,0.22);
   cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
+  padding: 0;
+  transition: width var(--transition), background var(--transition), transform var(--transition);
 }
 .dot.active {
+  width: 28px;
   background: var(--burgundy);
-  transform: scale(1.3);
 }
 
 /* ================================================
@@ -918,7 +915,7 @@ ul { list-style: none; }
 }
 .contacts__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(320px, 1.2fr);
   gap: 2.5rem;
   align-items: start;
 }
@@ -1017,7 +1014,8 @@ ul { list-style: none; }
   margin-bottom: 0.5rem;
 }
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
   width: 100%;
   padding: 0.9rem 1.25rem;
   border: 1.5px solid var(--beige);
@@ -1031,7 +1029,8 @@ ul { list-style: none; }
   resize: vertical;
 }
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
   border-color: var(--burgundy);
   box-shadow: 0 0 0 3px rgba(123,45,63,0.1);
 }
@@ -1063,6 +1062,156 @@ ul { list-style: none; }
 }
 
 /* ================================================
+   CATEGORY + ADMIN PAGES
+   ================================================ */
+   /* --- НАВІГАЦІЯ КАТЕГОРІЙ --- */
+.category-nav {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto; /* Дозволяє гортати на телефонах */
+  padding-bottom: 15px;
+  margin-bottom: 2rem;
+  scrollbar-width: none; /* Ховаємо скролбар у Firefox */
+}
+
+.category-nav::-webkit-scrollbar {
+  display: none; /* Ховаємо скролбар у Chrome/Safari */
+}
+
+.category-nav__link {
+  padding: 8px 20px;
+  border: 1px solid var(--primary-dark, #722222);
+  border-radius: 30px;
+  color: var(--primary-dark, #722222);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap; /* Забороняє тексту переноситися на новий рядок */
+  transition: all 0.3s ease;
+}
+
+.category-nav__link:hover,
+.category-nav__link.active {
+  background-color: var(--primary-dark, #722222);
+  color: #ffffff;
+}
+.page-shell {
+  min-height: 100vh;
+  padding: 7rem 0 clamp(4rem, 8vw, 6rem);
+  background: var(--cream);
+}
+.page-hero {
+  padding: 3rem 0 2rem;
+}
+.page-hero__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+.page-hero__text {
+  max-width: 720px;
+}
+.products-list {
+  display: grid;
+  gap: 1.25rem;
+}
+.category-product {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.category-product__img {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  background: linear-gradient(135deg, var(--cream-dark), var(--beige));
+}
+.category-product__body {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.category-product__category {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+}
+.category-product__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  line-height: 1.05;
+  color: var(--charcoal);
+  margin-bottom: 0.7rem;
+}
+.category-product__desc {
+  color: var(--text-muted);
+}
+.empty-state {
+  padding: 2rem;
+  border: 1px dashed var(--beige);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.55);
+}
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: 2rem;
+  align-items: start;
+}
+.admin-panel {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: var(--shadow-sm);
+}
+.admin-panel h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--charcoal);
+  margin-bottom: 1.25rem;
+}
+.admin-products {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.admin-product {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius-sm);
+}
+.admin-product img {
+  width: 72px;
+  height: 58px;
+  border-radius: var(--radius-sm);
+}
+.admin-product strong {
+  display: block;
+  color: var(--charcoal);
+}
+.admin-product span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+.status-line {
+  min-height: 1.4rem;
+  color: var(--burgundy);
+  font-size: 0.9rem;
+  margin-top: 0.85rem;
+}
+
+/* ================================================
    FOOTER
    ================================================ */
 .footer {
@@ -1081,6 +1230,16 @@ ul { list-style: none; }
   align-items: center;
   gap: 0.7rem;
   margin-bottom: 1.25rem;
+}
+.site-logo--footer {
+  width: clamp(150px, 16vw, 220px);
+  max-height: 120px;
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem;
+  opacity: 1;
+  /* Вимикаємо магію злиття для футера */
+  mix-blend-mode: normal; 
 }
 .footer__logo .logo-icon { color: var(--brown-light); }
 .footer__logo span {
@@ -1203,16 +1362,15 @@ ul { list-style: none; }
 @media (max-width: 1024px) {
   .menu__grid,
   .products__grid          { grid-template-columns: repeat(2, 1fr); }
+  .hero__main              { grid-template-columns: 1fr; gap: 1.75rem; }
+  .hero-news               { max-width: 620px; min-height: 0; }
   .advantages__grid        { grid-template-columns: repeat(2, 1fr); }
   .contacts__grid          { grid-template-columns: 1fr; }
   .footer__grid            { grid-template-columns: 1fr 1fr; }
   .footer__brand           { grid-column: 1 / -1; }
-  .atmosphere__grid,
   .about__grid             { grid-template-columns: 1fr; }
   .about__img              { height: 380px; }
   .about__img-decor        { right: 1rem; bottom: -1rem; }
-  .atmosphere__photos      { height: 340px; }
-  .atmosphere__text,
   .about__text             { padding-left: 0; }
 }
 
@@ -1224,7 +1382,10 @@ ul { list-style: none; }
             padding-bottom: clamp(3.5rem, 8vw, 5rem) !important; }
 
   /* --- HEADER --- */
-  /* Повноекранне мобільне меню — drawer справа */
+  .header__inner {
+    flex-direction: row-reverse; /* Міняє місцями ліво і право */
+    justify-content: space-between;
+  }
   .header__nav {
     position: fixed;
     top: 0; right: -100%;
@@ -1313,8 +1474,29 @@ ul { list-style: none; }
     width: 100%;
     text-align: center;
     justify-content: center;
-    padding: 1rem 1.5rem;
-    font-size: 0.9rem;
+    padding: 0.7rem 1rem; /* Було 1rem 1.5rem — робимо тоншими */
+    font-size: 0.85rem;
+  }
+
+  /* Зменшуємо сам блок новин */
+  .hero-news {
+    padding: 1rem; /* Робимо відступи всередині блоку меншими */
+    min-height: auto;
+  }
+  
+  /* Зменшуємо тексти всередині новин */
+  .hero-news__title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .hero-news__text {
+    font-size: 0.85rem;
+  }
+
+  /* Примусово зменшуємо фотографію новин на телефоні */
+  #heroNewsImg {
+    height: 120px !important; /* Було 180px */
+    margin-bottom: 8px !important;
   }
   .hero__scroll { display: none; }
 
@@ -1367,16 +1549,33 @@ ul { list-style: none; }
   .menu-card__img-wrap { height: 180px; }
 
   /* Підказка "свайп" */
-  .menu__grid-hint {
-    text-align: center;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 1rem;
-    opacity: 0.6;
-  }
+ .menu__grid-hint {
+  display: block;
+  width: fit-content;
+  margin: 1.5rem auto 0;
+  padding: 10px 28px;
+  
+  /* Стиль "Таблетки" (Idea 2) */
+  background: rgba(127, 7, 13, 0.08); /* Легкий бордовий фон */
+  border: 1.5px solid rgba(127, 7, 13, 0.2); /* Рамка */
+  border-radius: 50px;
+  
+  /* Текст */
+  color: var(--burgundy);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  
+  /* Анімація (Idea 1) */
+  animation: swipePillAnim 2.5s ease-in-out infinite;
+}
 
+/* Анімація м'якого руху в сторони */
+@keyframes swipePillAnim {
+  0%, 100% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+}
   /* --- BESTSELLERS --- */
   .products__grid {
     display: flex;
@@ -1411,14 +1610,6 @@ ul { list-style: none; }
     padding: 0.45rem;
   }
 
-  /* --- ATMOSPHERE --- */
-  .atmosphere__photos {
-    height: 220px;
-    margin-bottom: 1.75rem;
-  }
-  .atm-img--top  { width: 60%; height: 58%; }
-  .atm-img--bottom { width: 57%; height: 54%; }
-
   /* --- ADVANTAGES --- */
   .advantages__grid {
     grid-template-columns: 1fr 1fr;
@@ -1433,15 +1624,6 @@ ul { list-style: none; }
   .contact-item__icon { font-size: 1rem; }
   .social-btn { width: 36px; height: 36px; }
   .social-btn svg { width: 15px; height: 15px; }
-
-  /* --- GALLERY --- */
-  .gallery__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.6rem;
-  }
-  .gallery__item:nth-child(1),
-  .gallery__item:nth-child(6) { grid-column: span 1; }
-  .gallery__item img { min-height: 140px; }
 
   /* --- REVIEWS --- */
   /* На мобільному — повна ширина з горизонтальним свайпом */
@@ -1475,7 +1657,37 @@ ul { list-style: none; }
   .map-placeholder { min-height: 240px; }
   .contact-item { margin-bottom: 1.25rem; }
   .contacts__social { margin-top: 1rem; }
+  .page-hero__top,
+  .admin-grid,
+  .category-product {
+    grid-template-columns: 1fr;
+  }
+  .page-hero__top {
+    display: grid;
+  }
+  .category-product__img {
+    min-height: 220px;
+  }
+.admin-product {
+  display: flex; /* Змінюємо сітку на flex для зручного розміщення кнопки */
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+}
 
+.admin-product img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.admin-product__info {
+  flex-grow: 1;
+}
   /* Форма */
   .form-title { font-size: 1.5rem; }
   .form-group input,
@@ -1507,11 +1719,11 @@ ul { list-style: none; }
 @media (max-width: 480px) {
 
   .hero__title { font-size: clamp(2.2rem, 12vw, 3.2rem); }
+  .hero-news {
+    padding: 1.25rem;
+    border-left-width: 4px;
+  }
   .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
-
-  /* Галерея — одна колонка */
-  .gallery__grid { grid-template-columns: 1fr; gap: 0.6rem; }
-  .gallery__item img { min-height: 220px; }
 
   /* Переваги — одна колонка */
   .advantages__grid { grid-template-columns: 1fr; }
@@ -1524,11 +1736,6 @@ ul { list-style: none; }
   /* Badges в About — одна лінія */
   .about__badges { gap: 1.5rem; }
   .badge span { font-size: 1.6rem; }
-
-  /* Прибираємо складний parallax атмосфери — простіший варіант */
-  .atmosphere__photos { height: 180px; }
-  .atm-img--top  { width: 55%; height: 55%; }
-  .atm-img--bottom { width: 52%; height: 52%; }
 
   /* Кнопки героя — стек */
   .hero__btns .btn { width: 100%; }
@@ -1543,9 +1750,7 @@ ul { list-style: none; }
   .product-card:hover,
   .adv-card:hover { transform: none; box-shadow: var(--shadow-sm); }
   .menu-card:hover .menu-card__img,
-  .product-card:hover .product-card__img,
-  .gallery__item:hover img { transform: none; }
-  .gallery__item:hover .gallery__overlay { opacity: 0; }
+  .product-card:hover .product-card__img { transform: none; }
   /* Активний стан замість hover для тач */
   .menu-card:active  { transform: scale(0.98); }
   .product-card:active { transform: scale(0.98); }

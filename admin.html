@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Адмін-панель | ПОКУТСЬКА ПЕКАРНЯ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header scrolled">
+    <div class="header__inner container">
+      <a href="index.html#home" class="header__logo" aria-label="Покутська пекарня">
+        <img src="assets/logo.png" alt="Покутська пекарня" class="site-logo" />
+      </a>
+      <nav class="header__nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">Сайт</a></li>
+          <li><a href="category.html?category=bread" class="nav__link">Категорії</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <div class="container page-hero__text">
+        <p class="section-eyebrow">Керування сайтом</p>
+        <h1 class="section-title">Адмін-панель</h1>
+        <p class="section-sub">Додайте товар із фото або змініть текст блоку “Новинки” на головній сторінці.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container admin-grid">
+    <div class="admin-panel">
+      <h2 id="formTitle">Новий товар</h2> 
+      
+      <form class="form" id="productForm">
+        <input type="hidden" id="productId" name="id" />
+        <div class="form-group">
+          <label for="productName">Назва</label>
+          <input type="text" id="productName" name="name" required />
+        </div>
+            <div class="form-group">
+              <label for="productCategory">Категорія</label>
+              <select id="productCategory" name="category" required>
+                <option value="bread">Хліб</option>
+                <option value="croissants">Круасани</option>
+                <option value="buns">Булочки</option>
+                <option value="sweets">Солодка випічка</option>
+                <option value="pies">Пироги</option>
+                <option value="seasonal">Сезонні новинки</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="productDescription">Опис</label>
+              <textarea id="productDescription" name="description" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="productImage">Фотографія</label>
+              <input type="file" id="productImage" name="image" accept="image/png,image/jpeg,image/webp"  />
+            </div>
+            <button type="submit" class="btn btn--primary">Додати товар</button>
+            <p class="status-line" id="productStatus"></p>
+          </form>
+        </div>
+
+        <aside class="admin-panel">
+  <h2>Новинки</h2>
+  <form class="form" id="newsForm">
+    <div class="form-group">
+      <label for="newsText">Текст інформаційного блоку</label>
+      <textarea id="newsText" name="news" rows="6" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="newsImage">Фото для новини (необов'язково)</label>
+      <input type="file" id="newsImage" name="image" accept="image/png,image/jpeg,image/webp" />
+    </div>
+<img id="adminNewsPreview" src="" alt="Прев'ю новини" style="display: none; width: 100%; margin-top: 10px; border-radius: 8px; max-height: 150px; object-fit: cover;" />
+    <button type="submit" class="btn btn--primary">Зберегти новину</button>
+    <p class="status-line" id="newsStatus"></p>
+  </form>
+
+  <div class="admin-products" id="adminProducts"></div>
+</aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

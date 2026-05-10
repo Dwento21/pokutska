@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ПОКУТСЬКА ПЕКАРНЯ — свіжа випічка щодня. Натуральні інгредієнти, традиційні рецепти, справжній смак домашнього хліба." />
+  <meta name="description" content="ПОКУТСЬКА ПЕКАРНЯ — традиції рідного краю, натуральні інгредієнти та домашній смак Покуття." />
   <title>ПОКУТСЬКА ПЕКАРНЯ</title>
 
   <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
@@ -20,9 +20,8 @@
     <div class="header__inner container">
 
       <!-- Logo -->
-      <a href="#home" class="header__logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></span>
+      <a href="#home" class="header__logo" aria-label="Покутська пекарня">
+        <img src="assets/Logo1.png" alt="Покутська пекарня" class="site-logo" />
       </a>
 
       <!-- Navigation -->
@@ -32,7 +31,6 @@
           <li><a href="#about" class="nav__link">Про нас</a></li>
           <li><a href="#menu" class="nav__link">Асортимент</a></li>
           <li><a href="#bestsellers" class="nav__link">Хіти продажу</a></li>
-          <li><a href="#gallery" class="nav__link">Галерея</a></li>
           <li><a href="#contacts" class="nav__link">Контакти</a></li>
         </ul>
       </nav>
@@ -51,18 +49,33 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home">
     <div class="hero__bg">
-      <!-- Замініть на ваше фото: images/hero-bread.jpg -->
-      <img src="hero.png" alt="Свіжа випічка" class="hero__img" />
+      <!-- Замініть на ваше фото: imagines/hero.png -->
+      <img src="imagines/hero.png" alt="Свіжа випічка" class="hero__img" />
       <div class="hero__overlay"></div>
     </div>
 
     <div class="hero__content container">
-      <p class="hero__eyebrow">з любов'ю, щодня</p>
-      <h1 class="hero__title">ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></h1>
-      <p class="hero__subtitle">Свіжа випічка щодня, натуральні інгредієнти<br>та справжній смак домашнього хліба</p>
-      <div class="hero__btns">
-        <a href="#menu" class="btn btn--primary">Переглянути асортимент</a>
-        <a href="#contacts" class="btn btn--ghost">Наші контакти</a>
+      <div class="hero__main">
+        <div class="hero__copy">
+          <p class="hero__eyebrow">з любов'ю, щодня</p>
+          <h1 class="hero__title">ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></h1>
+          <p class="hero__subtitle">Традиції рідного краю</p>
+          <div class="hero__btns">
+            <a href="#menu" class="btn btn--primary">Переглянути асортимент</a>
+            <a href="#contacts" class="btn btn--ghost">Наші контакти</a>
+          </div>
+        </div>
+
+       <aside class="hero-news" aria-labelledby="heroNewsTitle">
+  <p class="hero-news__label">Новинки</p>
+  
+  
+  <h2 class="hero-news__title" id="heroNewsTitle">Свіжі новини пекарні</h2>
+  <img id="heroNewsImg" src="" alt="Свіжа новина" style="display: none; width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 1.25rem;" />
+  
+  <p class="hero-news__text" id="heroNewsText" data-news-endpoint="/api/settings/news">Сьогодні випікаємо хліб на живій заквасці та сезонні булочки до кави.</p>
+</aside>
+
       </div>
     </div>
 
@@ -79,8 +92,8 @@
 
       <!-- Фото зліва -->
       <div class="about__img-wrap">
-        <!-- Замініть на ваше фото: images/about-bakery.jpg -->
-        <img src="about.png" alt="Наша пекарня" class="about__img" />
+        <!-- Замініть на ваше фото: imagines/about.png -->
+        <img src="imagines/about.png" alt="Наша пекарня" class="about__img" />
         <div class="about__img-decor">з 2010 року</div>
       </div>
 
@@ -112,76 +125,76 @@
       <div class="menu__grid">
 
         <!-- Картка 1 -->
-        <div class="menu-card reveal">
+        <a class="menu-card reveal" href="category.html?category=bread">
           <div class="menu-card__img-wrap">
-            <img src="cat-bread.png" alt="Хліб" class="menu-card__img" />
+            <img src="imagines/cat-bread.png" alt="Хліб" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
             <h3 class="menu-card__title">Хліб</h3>
             <p class="menu-card__desc">Пшеничний, житній, на заквасці — хліб, який пахне справжнім домом.</p>
-            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+            <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
-        </div>
+        </a>
 
         <!-- Картка 2 -->
-        <div class="menu-card reveal">
+        <a class="menu-card reveal" href="category.html?category=croissants">
           <div class="menu-card__img-wrap">
-            <img src="cat-croasan.png" alt="Круасани" class="menu-card__img" />
+            <img src="imagines/cat-croasan.png" alt="Круасани" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
             <h3 class="menu-card__title">Круасани</h3>
             <p class="menu-card__desc">Хрусткі зовні, ніжні всередині — класичні та з різними начинками.</p>
-            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+            <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
-        </div>
+        </a>
 
         <!-- Картка 3 -->
-        <div class="menu-card reveal">
+        <a class="menu-card reveal" href="category.html?category=buns">
           <div class="menu-card__img-wrap">
-            <img src="cat-buns.png" alt="Булочки" class="menu-card__img" />
+            <img src="imagines/cat-buns.png" alt="Булочки" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
             <h3 class="menu-card__title">Булочки</h3>
             <p class="menu-card__desc">М'які, пухнасті булочки — ідеальний початок ранку або полуденок.</p>
-            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+            <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
-        </div>
+        </a>
 
         <!-- Картка 4 -->
-        <div class="menu-card reveal">
+        <a class="menu-card reveal" href="category.html?category=sweets">
           <div class="menu-card__img-wrap">
-            <img src="cat-sweets.png" alt="Солодка випічка" class="menu-card__img" />
+            <img src="imagines/cat-sweets.png" alt="Солодка випічка" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
             <h3 class="menu-card__title">Солодка випічка</h3>
             <p class="menu-card__desc">Тістечка, еклери, штруделі та інші солодощі, що дарують радість.</p>
-            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+            <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
-        </div>
+        </a>
 
         <!-- Картка 5 -->
-        <div class="menu-card reveal">
+        <a class="menu-card reveal" href="category.html?category=pies">
           <div class="menu-card__img-wrap">
-            <img src="cat-pies.png" alt="Пироги" class="menu-card__img" />
+            <img src="imagines/cat-pies.png" alt="Пироги" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
             <h3 class="menu-card__title">Пироги</h3>
             <p class="menu-card__desc">Закриті та відкриті пироги з традиційними начинками — солоні й солодкі.</p>
-            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+            <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
-        </div>
+        </a>
 
         <!-- Картка 6 -->
-        <div class="menu-card reveal">
+        <a class="menu-card reveal" href="category.html?category=seasonal">
           <div class="menu-card__img-wrap">
-            <img src="cat-seasonal.png" alt="Сезонні новинки" class="menu-card__img" />
+            <img src="imagines/cat-seasonal.png" alt="Сезонні новинки" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
             <h3 class="menu-card__title">Сезонні новинки</h3>
             <p class="menu-card__desc">Щосезону ми дивуємо свіжими рецептами, натхненними природою Покуття.</p>
-            <a href="#bestsellers" class="menu-card__link">Детальніше <span>→</span></a>
+            <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
-        </div>
+        </a>
 
       </div>
          <p class="menu__grid-hint">← свайпайте →</p>
@@ -200,14 +213,13 @@
         <!-- Product 1 -->
         <div class="product-card reveal">
           <div class="product-card__img-wrap">
-            <img src="croissan-clasic.png" alt="Круасан класичний" class="product-card__img" />
+            <img src="imagines/croissan-clasic.png" alt="Круасан класичний" class="product-card__img" />
             <span class="product-card__badge">Хіт</span>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Круасан класичний</h3>
             <p class="product-card__desc">27 шарів тіста, справжнє вершкове масло, золотиста скоринка</p>
             <div class="product-card__footer">
-              <span class="product-card__price">35 грн</span>
               <a href="#contacts" class="btn btn--sm">Замовити</a>
             </div>
           </div>
@@ -216,13 +228,12 @@
         <!-- Product 2 -->
         <div class="product-card reveal">
           <div class="product-card__img-wrap">
-            <img src="croissan-choco.png" alt="Круасан шоколадний" class="product-card__img" />
+            <img src="imagines/croissan-choco.png" alt="Круасан шоколадний" class="product-card__img" />
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Круасан шоколадний</h3>
             <p class="product-card__desc">З бельгійською шоколадною начинкою та хрусткою скоринкою</p>
             <div class="product-card__footer">
-              <span class="product-card__price">42 грн</span>
               <a href="#contacts" class="btn btn--sm">Замовити</a>
             </div>
           </div>
@@ -231,14 +242,13 @@
         <!-- Product 3 -->
         <div class="product-card reveal">
           <div class="product-card__img-wrap">
-            <img src="baguette.png" alt="Багет французький" class="product-card__img" />
+            <img src="imagines/baguette.png" alt="Багет французький" class="product-card__img" />
             <span class="product-card__badge">Хіт</span>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Багет французький</h3>
             <p class="product-card__desc">Хрусткий зовні, м'який всередині, з ароматом свіжого борошна</p>
             <div class="product-card__footer">
-              <span class="product-card__price">38 грн</span>
               <a href="#contacts" class="btn btn--sm">Замовити</a>
             </div>
           </div>
@@ -247,13 +257,12 @@
         <!-- Product 4 -->
         <div class="product-card reveal">
           <div class="product-card__img-wrap">
-            <img src="cinnamon.png" alt="Булочка з корицею" class="product-card__img" />
+            <img src="imagines/cinnamon.png" alt="Булочка з корицею" class="product-card__img" />
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Булочка з корицею</h3>
             <p class="product-card__desc">Ніжне здобне тісто, справжня кориця і карамельна глазур</p>
             <div class="product-card__footer">
-              <span class="product-card__price">32 грн</span>
               <a href="#contacts" class="btn btn--sm">Замовити</a>
             </div>
           </div>
@@ -262,14 +271,13 @@
         <!-- Product 5 -->
         <div class="product-card reveal">
           <div class="product-card__img-wrap">
-            <img src="sourdough.png" alt="Хліб на заквасці" class="product-card__img" />
+            <img src="imagines/sourdough.png" alt="Хліб на заквасці" class="product-card__img" />
             <span class="product-card__badge">Фаворит</span>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Хліб на заквасці</h3>
             <p class="product-card__desc">Жива закваска, довге бродіння, неповторний характер і смак</p>
             <div class="product-card__footer">
-              <span class="product-card__price">95 грн</span>
               <a href="#contacts" class="btn btn--sm">Замовити</a>
             </div>
           </div>
@@ -278,13 +286,12 @@
         <!-- Product 6 -->
         <div class="product-card reveal">
           <div class="product-card__img-wrap">
-            <img src="cheese-snail.png" alt="Сирний равлик" class="product-card__img" />
+            <img src="imagines/cheese-snail.png" alt="Сирний равлик" class="product-card__img" />
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Сирний равлик</h3>
             <p class="product-card__desc">Листкове тісто з ніжним сиром і зеленню — ідеально до кави</p>
             <div class="product-card__footer">
-              <span class="product-card__price">40 грн</span>
               <a href="#contacts" class="btn btn--sm">Замовити</a>
             </div>
           </div>
@@ -292,27 +299,7 @@
 
       </div>
     </div>
-  </section>
-
-  <!-- ===================== ATMOSPHERE BLOCK ===================== -->
-  <section class="atmosphere reveal">
-    <div class="container atmosphere__grid">
-
-      <div class="atmosphere__photos">
-        <!-- Замініть: images/atm-1.jpg та images/atm-2.jpg -->
-        <img src="atm1.png" alt="Атмосфера пекарні" class="atm-img atm-img--top" />
-        <img src="atm2.png" alt="Свіжа випічка" class="atm-img atm-img--bottom" />
-      </div>
-
-      <div class="atmosphere__text">
-        <p class="section-eyebrow">наша філософія</p>
-        <h2 class="section-title">Магія<br><em>в кожній крихті</em></h2>
-        <p class="atmosphere__body">Ми вважаємо, що справжня їжа — це та, що приготована з турботою. Кожна буханка хліба, кожен круасан і кожна булочка — це не просто продукт, це маленька історія, в якій є час, тепло та увага до деталей.</p>
-        <p class="atmosphere__body">Завітайте до нас уранці, коли аромат свіжоспеченого хліба розливається по вулиці. Це — ПОКУТСЬКА ПЕКАРНЯ.</p>
-        <a href="#about" class="btn btn--outline-dark">Дізнатися більше</a>
-      </div>
-
-    </div>
+    <div class="menu__grid-hint">← СВАЙПАЙТЕ →</div>
   </section>
 
   <!-- ===================== ADVANTAGES ===================== -->
@@ -351,127 +338,144 @@
     </div>
   </section>
 
-  <!-- ===================== GALLERY ===================== -->
-  <section class="gallery reveal" id="gallery">
-    <div class="container">
-      <p class="section-eyebrow center">Наш світ</p>
-      <h2 class="section-title center">Галерея</h2>
-      <p class="section-sub center">Погляньте на те, що ми робимо щодня з любов'ю</p>
-
-      <div class="gallery__grid">
-        <!-- Замініть: images/gallery-1.jpg ... gallery-8.jpg -->
-        <div class="gallery__item reveal" data-src="images/gallery-1.jpg">
-          <img src="galere1.jpg" alt="Галерея 1" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-2.jpg">
-          <img src="galere2.jpg" alt="Галерея 2" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-3.jpg">
-          <img src="galere3.jpg" alt="Галерея 3" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-4.jpg">
-          <img src="galere4.jpg" alt="Галерея 4" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-5.jpg">
-          <img src="galere5.jpg" alt="Галерея 5" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-6.jpg">
-          <img src="galere6.jpg" alt="Галерея 6" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-7.jpg">
-          <img src="galere7.jpg" alt="Галерея 7" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-        <div class="gallery__item reveal" data-src="images/gallery-8.jpg">
-          <img src="galere8.jpg" alt="Галерея 8" />
-          <div class="gallery__overlay"><span>↗</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox__close" id="lightboxClose">✕</button>
-    <button class="lightbox__prev" id="lightboxPrev">‹</button>
-    <button class="lightbox__next" id="lightboxNext">›</button>
-    <div class="lightbox__img-wrap">
-      <img src="" alt="" id="lightboxImg" />
-    </div>
-  </div>
-
   <!-- ===================== REVIEWS ===================== -->
   <section class="reviews reveal" id="reviews">
     <div class="container">
-      <p class="section-eyebrow center">Що кажуть гості</p>
-      <h2 class="section-title center">Відгуки</h2>
-
-      <div class="reviews__slider" id="reviewsSlider">
-        <div class="reviews__track" id="reviewsTrack" data-reviews-endpoint="">
-
-          <!-- Review 1 -->
-          <div class="review-card">
-            <div class="review-card__stars">★★★★★</div>
-            <p class="review-card__text">«Круасани тут — найкращі, що я куштувала в Україні. Хрусткі, ароматні, з ніжним маслом. Щоранку заходжу і щоразу повертаюся за добавкою. ПОКУТСЬКА ПЕКАРНЯ — це моє місце сили!»</p>
-            <div class="review-card__author">
-              <div class="review-card__avatar">О</div>
-              <div>
-                <strong>Оксана Мельник</strong>
-                <small>постійна гостя</small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Review 2 -->
-          <div class="review-card">
-            <div class="review-card__stars">★★★★★</div>
-            <p class="review-card__text">«Замовляв хліб на заквасці для нашого ресторану. Гості одразу запитують, де ми берємо такий хліб. Запах, текстура, смак — все на вищому рівні. Тепер тільки звідси!»</p>
-            <div class="review-card__author">
-              <div class="review-card__avatar">І</div>
-              <div>
-                <strong>Іван Коваль</strong>
-                <small>власник ресторану</small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Review 3 -->
-          <div class="review-card">
-            <div class="review-card__stars">★★★★★</div>
-            <p class="review-card__text">«Брала пироги на сімейне свято — всі були у захваті! Начинки соковиті, тісто м'яке, подача гарна. Атмосфера самої пекарні теж чарівна — відчуваєш справжній домашній затишок.»</p>
-            <div class="review-card__author">
-              <div class="review-card__avatar">М</div>
-              <div>
-                <strong>Марія Гнатюк</strong>
-                <small>гостя з Коломиї</small>
-              </div>
-            </div>
-          </div>
-
+      <div class="reviews__header">
+        <div>
+          <p class="section-eyebrow">Що кажуть гості</p>
+          <h2 class="section-title">Відгуки</h2>
+        </div>
+        <div class="reviews__controls" aria-label="Керування відгуками">
+          <button class="reviews__nav" type="button" id="reviewsPrev" aria-label="Попередні відгуки">‹</button>
+          <button class="reviews__nav" type="button" id="reviewsNext" aria-label="Наступні відгуки">›</button>
         </div>
       </div>
 
-      <!-- Dots -->
-      <div class="reviews__dots" id="reviewsDots">
-        <span class="dot active" data-index="0"></span>
-        <span class="dot" data-index="1"></span>
-        <span class="dot" data-index="2"></span>
+      <div class="reviews__slider" id="reviewsSlider">
+        <div class="reviews__track" id="reviewsTrack" data-reviews-endpoint="">
+          <article class="review-card" aria-label="Відгук 1 від Олена">
+            <div class="review-card__top">
+              <div class="review-card__avatar">О</div>
+              <div>
+                <strong>Олена</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Найсмачніший хліб у місті! Завжди свіжий, з хрусткою скоринкою і неймовірним ароматом.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 2 від Михайло">
+            <div class="review-card__top">
+              <div class="review-card__avatar">М</div>
+              <div>
+                <strong>Михайло</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Справжні традиції рідного краю. Випічка завжди на вищому рівні, відчувається, що зроблено з душею та з натуральних інгредієнтів.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 3 від Ірина">
+            <div class="review-card__top">
+              <div class="review-card__avatar">І</div>
+              <div>
+                <strong>Ірина</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Дуже подобаються ваші булочки з маком і вишнею. Діти їдять із задоволенням, нагадує смак дитинства!»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 4 від Андрій">
+            <div class="review-card__top">
+              <div class="review-card__avatar">А</div>
+              <div>
+                <strong>Андрій</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Хліб не кришиться на другий день і довго залишається свіжим. Видно, що використовують справді якісне борошно і правильну рецептуру.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 5 від Вікторія">
+            <div class="review-card__top">
+              <div class="review-card__avatar">В</div>
+              <div>
+                <strong>Вікторія</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Обожнюю вашу випічку! Завжди купую свіжі пиріжки вранці до кави. Дякую за вашу працю!»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 6 від Тарас">
+            <div class="review-card__top">
+              <div class="review-card__avatar">Т</div>
+              <div>
+                <strong>Тарас</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Чудова пекарня! Замовляли різні види хліба та здоби на родинне свято, всі гості були в захваті і питали, де ми це купили.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 7 від Оксана">
+            <div class="review-card__top">
+              <div class="review-card__avatar">О</div>
+              <div>
+                <strong>Оксана</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Найкраща випічка, яку я куштувала за останні роки. Справжній, чесний домашній смак без штучних розпушувачів.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 8 від Дмитро">
+            <div class="review-card__top">
+              <div class="review-card__avatar">Д</div>
+              <div>
+                <strong>Дмитро</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Завжди привітне обслуговування і неймовірно смачна продукція. Ваш житній хліб — мій фаворит.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 9 від Наталія">
+            <div class="review-card__top">
+              <div class="review-card__avatar">Н</div>
+              <div>
+                <strong>Наталія</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Аромат біля вашої пекарні такий, що неможливо пройти повз! Дуже смачно, обов'язково рекомендуватиму знайомим.»</p>
+          </article>
+          <article class="review-card" aria-label="Відгук 10 від Сергій">
+            <div class="review-card__top">
+              <div class="review-card__avatar">С</div>
+              <div>
+                <strong>Сергій</strong>
+                <small>оцінка клієнта</small>
+              </div>
+            </div>
+            <div class="review-card__stars" aria-label="5 зірок">★★★★★</div>
+            <p class="review-card__text">«Прекрасна якість за хорошу ціну. Дуже радіємо, що маємо таку чудову пекарню поряд.»</p>
+          </article>
+        </div>
       </div>
 
+      <div class="reviews__dots" id="reviewsDots" aria-label="Позиція слайдера"></div>
     </div>
   </section>
 
   <!-- ===================== CTA ===================== -->
   <section class="cta reveal">
     <div class="cta__bg">
-      <!-- Замініть: images/cta-bg.jpg -->
-      <img src="cta.png" alt="Пекарня" class="cta__img" />
+      <!-- Замініть: imagines/cta.png -->
+      <img src="imagines/cta.png" alt="Пекарня" class="cta__img" />
       <div class="cta__overlay"></div>
     </div>
     <div class="cta__content container">
@@ -527,15 +531,13 @@
 
           <!-- Соцмережі -->
           <div class="contacts__social">
-            <a href="https://www.instagram.com/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/pokutskapekarnia/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             </a>
-            <a href="https://www.facebook.com/" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/pekarna.pokuts.ka" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
             </a>
-            <a href="https://www.tiktok.com/" class="social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
-            </a>
+            
           </div>
 
         </div>
@@ -553,38 +555,6 @@
           </div>
         </div>
 
-        <!-- Contact Form -->
-        <div class="contacts__form">
-          <h3 class="form-title">Надішліть повідомлення</h3>
-          <form class="form" id="contactForm" data-endpoint="https://formspree.io/f/mkokrdgv" novalidate>
-
-            <div class="form-group">
-              <label for="name">Ваше ім'я *</label>
-              <input type="text" id="name" name="name" placeholder="Наприклад: Марія" />
-              <span class="form-error" id="nameError"></span>
-            </div>
-
-            <div class="form-group">
-              <label for="phone">Телефон *</label>
-              <input type="tel" id="phone" name="phone" placeholder="+38 (0__) ___-__-__" />
-              <span class="form-error" id="phoneError"></span>
-            </div>
-
-            <div class="form-group">
-              <label for="message">Повідомлення</label>
-              <textarea id="message" name="message" rows="4" placeholder="Напишіть ваше запитання або побажання..."></textarea>
-            </div>
-
-            <button type="submit" class="btn btn--primary btn--full">Надіслати</button>
-
-            <!-- Success message -->
-            <div class="form-success" id="formSuccess" hidden>
-              ✓ Дякуємо! Ми зв'яжемося з вами найближчим часом.
-            </div>
-
-          </form>
-        </div>
-
       </div>
     </div>
   </section>
@@ -594,21 +564,18 @@
     <div class="container footer__grid">
 
       <div class="footer__brand">
-        <a href="#home" class="footer__logo">
-          <span class="logo-icon">✦</span>
-          <span>ПОКУТСЬКА<br><em>ПЕКАРНЯ</em></span>
+        <a href="#home" class="footer__logo" aria-label="Покутська пекарня">
+          <img src="assets/logo1.png" alt="Покутська пекарня" class="site-logo site-logo--footer" />
         </a>
-        <p class="footer__tagline">Свіжа випічка щодня.<br>З любов'ю до кожної крихти.</p>
+        <p class="footer__tagline">Традиції рідного краю.<br>З любов'ю до кожної крихти.</p>
         <div class="footer__social">
-          <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/pokutskapekarnia/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
-          <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.facebook.com/pekarna.pokuts.ka" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
           </a>
-          <a href="https://www.tiktok.com/" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
-          </a>
+          
         </div>
       </div>
 
@@ -619,7 +586,6 @@
           <li><a href="#about">Про нас</a></li>
           <li><a href="#menu">Асортимент</a></li>
           <li><a href="#bestsellers">Хіти продажу</a></li>
-          <li><a href="#gallery">Галерея</a></li>
           <li><a href="#contacts">Контакти</a></li>
         </ul>
       </div>

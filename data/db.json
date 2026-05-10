@@ -1,0 +1,66 @@
+{
+  "settings": {
+    "news": {
+      "text": "Новинка хлібу ми змінили рецептуру",
+      "image": "imagines/uploads/news-1778422898300.jpg"
+    }
+  },
+  "products": [
+    {
+      "id": "croissants-138ee170-1a6d-469e-ab95-439121402cc8",
+      "name": "Круасаніо",
+      "category": "croissants",
+      "description": "Крута булка",
+      "image": "imagines/uploads/1778429370955-ekjxrf.jpg",
+      "createdAt": "2026-05-10T16:09:30.957Z"
+    },
+    {
+      "id": "bread-sourdough",
+      "name": "Хліб на заквасці",
+      "category": "bread",
+      "description": "Жива закваска, довге бродіння, щільна скоринка і м'який ароматний м'якуш.",
+      "image": "imagines/sourdough.png",
+      "createdAt": "2026-05-10T00:00:00.000Z"
+    },
+    {
+      "id": "bread-baguette",
+      "name": "Багет французький",
+      "category": "bread",
+      "description": "Хрусткий зовні, м'який усередині, з ароматом свіжого борошна.",
+      "image": "imagines/baguette.png",
+      "createdAt": "2026-05-10T00:00:00.000Z"
+    },
+    {
+      "id": "buns-cinnamon",
+      "name": "Булочка з корицею",
+      "category": "buns",
+      "description": "Ніжне здобне тісто, справжня кориця і легка карамельна глазур.",
+      "image": "imagines/cinnamon.png",
+      "createdAt": "2026-05-10T00:00:00.000Z"
+    },
+    {
+      "id": "buns-cheese-snail",
+      "name": "Сирний равлик",
+      "category": "buns",
+      "description": "Листкове тісто з ніжним сиром і зеленню, добре смакує до кави.",
+      "image": "imagines/cheese-snail.png",
+      "createdAt": "2026-05-10T00:00:00.000Z"
+    },
+    {
+      "id": "croissants-classic",
+      "name": "Круасан класичний",
+      "category": "croissants",
+      "description": "Багатошарове тісто, вершкове масло і золотиста скоринка.",
+      "image": "imagines/croissan-clasic.png",
+      "createdAt": "2026-05-10T00:00:00.000Z"
+    },
+    {
+      "id": "croissants-chocolate",
+      "name": "Круасан шоколадний",
+      "category": "croissants",
+      "description": "Класичний круасан із шоколадною начинкою та хрусткою скоринкою.",
+      "image": "imagines/croissan-choco.png",
+      "createdAt": "2026-05-10T00:00:00.000Z"
+    }
+  ]
+}
