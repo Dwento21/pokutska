@@ -1321,6 +1321,99 @@ ul { list-style: none; }
   margin-top: 1rem;
   opacity: 0.55;
 }
+/* --- LIGHTBOX (Повноекранні фото) --- */
+.lightbox {
+  display: none; /* За замовчуванням сховано */
+  position: fixed;
+  z-index: 9999;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(36, 18, 13, 0.92); /* Темно-коричневий напівпрозорий фон */
+  backdrop-filter: blur(8px); /* Розмиття заднього фону */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.show {
+  display: block;
+  opacity: 1;
+}
+
+.lightbox-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease; /* Плавне збільшення */
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* --- LIGHTBOX (Повноекранні фото) --- */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(36, 18, 13, 0.92);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  /* Використовуємо flex для ідеального центрування */
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.show {
+  display: flex; /* Було block, стало flex */
+  opacity: 1;
+}
+
+.lightbox-content {
+  width: 100%;          /* Просимо зайняти всю доступну ширину */
+  height: 100%;         /* Просимо зайняти всю доступну висоту */
+  max-width: 90vw;      /* Але не більше 90% екрана по ширині */
+  max-height: 85vh;     /* І не більше 85% по висоті */
+  object-fit: contain;  /* Найважливіше: масштабує картинку рівномірно без обрізання! */
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  color: var(--beige);
+  font-size: 45px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 10000;
+}
+
+.lightbox-close:hover {
+  color: #fff;
+}
+
+.category-product__img {
+  cursor: zoom-in;
+}
 @media (hover: none) {
   .menu__grid-hint { display: block; }
 }

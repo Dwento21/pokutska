@@ -98,7 +98,25 @@ window.prepareEdit = async (id) => {
     console.error('Не вдалося завантажити дані для редагування');
   }
 };
+// Глобальна функція видалення
+window.deleteProduct = async (id) => {
+  if (!confirm('Ви впевнені, що хочете видалити цей товар?')) return;
 
+  try {
+    const response = await fetch(`/api/products?id=${id}`, {
+      method: 'DELETE'
+    });
+    
+    if (response.ok) {
+      loadAdminData(); // Автоматично оновлюємо список після видалення
+    } else {
+      alert('Помилка: сервер не зміг видалити товар');
+    }
+  } catch (error) {
+    console.error('Помилка:', error);
+    alert('Помилка зв\'язку з сервером при видаленні');
+  }
+};
 // Обробник для товарів
 document.getElementById('productForm').addEventListener('submit', async (event) => {
   event.preventDefault();

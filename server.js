@@ -22,7 +22,7 @@ const MIME = {
 };
 
 // --- АВТОРИЗАЦІЯ ---
-const ADMIN_PASSWORD = '21042006'; 
+const ADMIN_PASSWORD = '2104'; 
 const SESSION_COOKIE = 'auth_session=bakery_secret_token';
 
 function isAuthenticated(req) {
@@ -100,8 +100,28 @@ function parseMultipart(buffer, contentType) {
 async function handleApi(req, res, url) {
   const db = readDb();
 
-  // Логін
-  // --- НОВИЙ РОУТ ДЛЯ ВИДАЛЕННЯ ---
+  /// Логін
+  if (req.method === 'POST' && url.pathname === '/api/login') {
+    try {
+      const body = await collectBody(req);
+      const { password } = JSON.parse(body.toString());
+
+      if (password === ADMIN_PASSWORD) {
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Set-Cookie': `${SESSION_COOKIE}; HttpOnly; Path=/; Max-Age=86400`
+        });
+        res.end(JSON.stringify({ success: true }));
+      } else {
+        sendText(res, 401, 'Невірний пароль');
+      }
+    } catch (e) {
+      sendText(res, 400, 'Помилка запиту');
+    }
+    return true;
+  }
+
+  // --- РОУТ ДЛЯ ВИДАЛЕННЯ ---
   if (req.method === 'DELETE' && url.pathname === '/api/products') {
     const id = url.searchParams.get('id');
     if (!id) {
@@ -109,7 +129,6 @@ async function handleApi(req, res, url) {
       return true;
     }
 
-    // Читаємо базу, видаляємо товар і зберігаємо назад
     db.products = db.products.filter(p => p.id !== id);
     writeDb(db);
     
@@ -177,7 +196,6 @@ async function handleApi(req, res, url) {
     return true;
   }
 
-  // Додавання нового товару
   // Додавання або редагування товару
   if (req.method === 'POST' && url.pathname === '/api/products') {
     const contentType = req.headers['content-type'] || '';
@@ -195,18 +213,22 @@ async function handleApi(req, res, url) {
     const image = parts.find((part) => part.name === 'image' && part.filename);
     const productId = fields.id;
 
-    // Перевірка (фото обов'язкове ТІЛЬКИ для нових товарів)
+    // Фото обов'язкове ТІЛЬКИ якщо ми створюємо НОВИЙ товар (немає productId)
     if (!fields.name || !fields.category || !fields.description || (!image && !productId)) {
-      sendText(res, 400, 'Заповніть обов\'язкові поля. Фото потрібне для нових товарів.');
+      sendText(res, 400, 'Заповніть назву, категорію та опис. Фото обов’язкове лише для нових товарів.');
       return true;
     }
 
-    let filename = '';
+    let savedFilename = ''; // Змінили ім'я змінної, щоб 100% не було конфліктів
     if (image) {
       const ext = path.extname(image.filename).toLowerCase() || '.jpg';
+      if (!['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
+        sendText(res, 400, 'Підтримуються лише JPG, PNG або WEBP');
+        return true;
+      }
       fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-      filename = `${Date.now()}-${slugify(fields.name)}${ext}`;
-      fs.writeFileSync(path.join(UPLOAD_DIR, filename), image.body);
+      savedFilename = `${Date.now()}-${slugify(fields.name)}${ext}`;
+      fs.writeFileSync(path.join(UPLOAD_DIR, savedFilename), image.body);
     }
 
     if (productId) {
@@ -218,7 +240,7 @@ async function handleApi(req, res, url) {
           name: fields.name,
           category: fields.category,
           description: fields.description,
-          image: image ? `imagines/uploads/${filename}` : db.products[index].image
+          image: image ? `imagines/uploads/${savedFilename}` : db.products[index].image
         };
         writeDb(db);
         sendJson(res, 200, db.products[index]);
@@ -232,7 +254,7 @@ async function handleApi(req, res, url) {
         name: fields.name,
         category: fields.category,
         description: fields.description,
-        image: `imagines/uploads/${filename}`,
+        image: `imagines/uploads/${savedFilename}`,
         createdAt: new Date().toISOString()
       };
       db.products.unshift(product);
@@ -240,6 +262,7 @@ async function handleApi(req, res, url) {
       sendJson(res, 201, product);
     }
     return true;
+  
   }
 
   return false;

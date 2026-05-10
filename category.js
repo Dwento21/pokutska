@@ -96,9 +96,10 @@ function renderProducts(products) {
     return;
   }
 
+
   holder.innerHTML = list.map((product) => `
     <article class="category-product">
-      <img class="category-product__img" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" />
+      <img class="category-product__img" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" onclick="openLightbox('${escapeHtml(product.image)}')" />
       <div class="category-product__body">
         <span class="category-product__category">${escapeHtml(category.title)}</span>
         <h2 class="category-product__title">${escapeHtml(product.name)}</h2>
@@ -123,7 +124,26 @@ async function loadProducts() {
     renderProducts(FALLBACK_PRODUCTS);
   }
 }
+// Функції для повноекранного фото
+window.openLightbox = function(src) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  if (lightbox && lightboxImg) {
+    lightboxImg.src = src;
+    lightbox.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  } else {
+    console.error('Не знайдено HTML-блок для Lightbox!');
+  }
+};
 
+window.closeLightbox = function() {
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    lightbox.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+};
 loadProducts();
 // Підсвічування активної кнопки категорії
 document.addEventListener('DOMContentLoaded', () => {
