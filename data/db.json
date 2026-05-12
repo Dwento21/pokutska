@@ -7,19 +7,19 @@
   },
   "products": [
     {
-      "id": "croissants-138ee170-1a6d-469e-ab95-439121402cc8",
-      "name": "Круасаніо",
-      "category": "croissants",
-      "description": "Крута булка",
-      "image": "imagines/uploads/1778429370955-ekjxrf.jpg",
-      "createdAt": "2026-05-10T16:09:30.957Z"
+      "id": "sweets-228fabf8-1d02-4cdf-a9a1-aa49b6fc8122",
+      "name": "dbgsxrf",
+      "category": "sweets",
+      "description": "hhhh",
+      "image": "imagines/uploads/1778510806862-dbgsxrf.png",
+      "createdAt": "2026-05-11T14:46:46.865Z"
     },
     {
       "id": "bread-sourdough",
       "name": "Хліб на заквасці",
       "category": "bread",
       "description": "Жива закваска, довге бродіння, щільна скоринка і м'який ароматний м'якуш.",
-      "image": "imagines/sourdough.png",
+      "image": "imagines/uploads/1778510788860-хліб-на-заквасці.jpg",
       "createdAt": "2026-05-10T00:00:00.000Z"
     },
     {

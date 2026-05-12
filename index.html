@@ -9,7 +9,7 @@
   <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&family=Yeseva+One&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -86,6 +86,24 @@
     </div>
   </section>
 
+  <!-- ===================== STATS STRIP ===================== -->
+  <section class="stats-strip reveal" aria-label="Показники пекарні">
+    <div class="container stats-strip__grid">
+      <div class="stats-strip__item">
+        <span>10+</span>
+        <small>років досвіду</small>
+      </div>
+      <div class="stats-strip__item">
+        <span>50 000+</span>
+        <small>задоволених клієнтів</small>
+      </div>
+      <div class="stats-strip__item">
+        <span>50+</span>
+        <small>видів випічки</small>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== PRO NAS ===================== -->
   <section class="about reveal" id="about">
     <div class="container about__grid">
@@ -105,11 +123,6 @@
         <p class="about__body">Більше ніж десять років тому наш засновник відчинив двері маленької пекарні в серці Покуття. Сьогодні ми — команда закоханих у свою справу пекарів, які щодня о четвертій ранку розпочинають роботу, щоб ви отримали тільки свіже.</p>
         <p class="about__body">Ми використовуємо лише натуральні інгредієнти: борошно від місцевих млинів, справжнє вершкове масло, жива закваска, яку ми плекаємо вже роками. Жодних консервантів. Жодних компромісів.</p>
 
-        <div class="about__badges">
-          <div class="badge"><span>100%</span><small>натуральний склад</small></div>
-          <div class="badge"><span>∞</span><small>рецептів з душею</small></div>
-          <div class="badge"><span>365</span><small>свіжих днів на рік</small></div>
-        </div>
       </div>
 
     </div>
@@ -139,10 +152,10 @@
         <!-- Картка 2 -->
         <a class="menu-card reveal" href="category.html?category=croissants">
           <div class="menu-card__img-wrap">
-            <img src="imagines/cat-croasan.png" alt="Круасани" class="menu-card__img" />
+            <img src="imagines/calach.png" alt="Калачі" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
-            <h3 class="menu-card__title">Круасани</h3>
+            <h3 class="menu-card__title">Калачі</h3>
             <p class="menu-card__desc">Хрусткі зовні, ніжні всередині — класичні та з різними начинками.</p>
             <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
@@ -175,10 +188,10 @@
         <!-- Картка 5 -->
         <a class="menu-card reveal" href="category.html?category=pies">
           <div class="menu-card__img-wrap">
-            <img src="imagines/cat-pies.png" alt="Пироги" class="menu-card__img" />
+            <img src="imagines/cat-pies.png" alt="Фастфуд" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
-            <h3 class="menu-card__title">Пироги</h3>
+            <h3 class="menu-card__title">Фастфуд</h3>
             <p class="menu-card__desc">Закриті та відкриті пироги з традиційними начинками — солоні й солодкі.</p>
             <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
@@ -187,10 +200,10 @@
         <!-- Картка 6 -->
         <a class="menu-card reveal" href="category.html?category=seasonal">
           <div class="menu-card__img-wrap">
-            <img src="imagines/cat-seasonal.png" alt="Сезонні новинки" class="menu-card__img" />
+            <img src="imagines/cat-seasonal.png" alt="Великодні вироби" class="menu-card__img" />
           </div>
           <div class="menu-card__body">
-            <h3 class="menu-card__title">Сезонні новинки</h3>
+            <h3 class="menu-card__title">Великодні вироби</h3>
             <p class="menu-card__desc">Щосезону ми дивуємо свіжими рецептами, натхненними природою Покуття.</p>
             <span class="menu-card__link">Детальніше <span>→</span></span>
           </div>
@@ -530,6 +543,7 @@
           </div>
 
           <!-- Соцмережі -->
+          <p class="contacts__social-title">Наші соцмережі</p>
           <div class="contacts__social">
             <a href="https://www.instagram.com/pokutskapekarnia/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
@@ -565,7 +579,7 @@
 
       <div class="footer__brand">
         <a href="#home" class="footer__logo" aria-label="Покутська пекарня">
-          <img src="assets/logo1.png" alt="Покутська пекарня" class="site-logo site-logo--footer" />
+          <img src="assets/Logo1.png" alt="Покутська пекарня" class="site-logo site-logo--footer" />
         </a>
         <p class="footer__tagline">Традиції рідного краю.<br>З любов'ю до кожної крихти.</p>
         <div class="footer__social">

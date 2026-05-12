@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>Вхід | ПОКУТСЬКА ПЕКАРНЯ</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Вхід | Покутська пекарня</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="page-shell">
-    <div class="container" style="max-width: 400px; margin-top: 100px;">
+<body>
+  <main class="page-shell">
+    <section class="container" style="max-width: 460px;">
+      <div class="admin-panel">
+        <p class="section-eyebrow center">Адмін-панель</p>
         <h1 class="section-title center">Вхід</h1>
-        <form id="loginForm" class="form">
-            <div class="form-group">
-                <label for="password">Пароль адміністратора</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit" class="btn btn--primary btn--full">Увійти</button>
-            <p id="loginStatus" class="status-line" style="text-align: center; margin-top: 10px;"></p>
+
+        <form id="loginForm" class="form" novalidate>
+          <div class="form-group">
+            <label for="password">Пароль адміністратора</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="btn btn--primary btn--full">Увійти</button>
+          <p id="loginStatus" class="status-line" style="text-align:center;"></p>
         </form>
-    </div>
+      </div>
+    </section>
+  </main>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password })
-            });
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-            if (res.ok) {
-                // Якщо сервер дав добро, переходимо в адмінку
-                window.location.href = '/admin.html';
-            } else {
-                // Якщо помилка (статус 401)
-                document.getElementById('loginStatus').textContent = 'Невірний пароль!';
-                document.getElementById('password').value = '';
-            }
+      const form = event.currentTarget;
+      const status = document.getElementById('loginStatus');
+      const submitButton = form.querySelector('button[type="submit"]');
+
+      status.textContent = 'Перевіряємо...';
+      submitButton.disabled = true;
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: form.password.value })
         });
-    </script>
+
+        if (!response.ok) {
+          status.textContent = response.status === 429
+            ? 'Забагато спроб. Спробуйте пізніше.'
+            : 'Невірний пароль.';
+          form.password.value = '';
+          form.password.focus();
+          return;
+        }
+
+        window.location.href = '/admin';
+      } catch (_) {
+        status.textContent = 'Не вдалося зв’язатися із сервером.';
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>

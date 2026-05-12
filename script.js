@@ -71,6 +71,132 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  function createMobileLoopScroller(trackSelector, cardSelector, cloneClass, align = 'start') {
+    const track = document.querySelector(trackSelector);
+    if (!track) return;
+
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    let loopReady = false;
+    let scrollFrame = null;
+    let jumping = false;
+
+    const getOriginalCards = () => Array.from(track.children)
+      .filter((card) => card.matches(cardSelector) && !card.classList.contains(cloneClass));
+
+    const getAllCards = () => Array.from(track.children)
+      .filter((card) => card.matches(cardSelector));
+
+    const getCardScrollLeft = (card) => (
+      align === 'center'
+        ? card.offsetLeft - ((track.clientWidth - card.offsetWidth) / 2)
+        : card.offsetLeft - (parseFloat(window.getComputedStyle(track).paddingLeft || '0') || 0)
+    );
+
+    function createClone(card) {
+      const clone = card.cloneNode(true);
+      clone.classList.add(cloneClass);
+      clone.classList.remove('reveal', 'visible');
+      clone.tabIndex = -1;
+      return clone;
+    }
+
+    function jumpTo(left) {
+      jumping = true;
+      const oldBehavior = track.style.scrollBehavior;
+      const oldSnap = track.style.scrollSnapType;
+      track.style.scrollBehavior = 'auto';
+      track.style.scrollSnapType = 'none';
+      track.scrollLeft = left;
+
+      requestAnimationFrame(() => {
+        track.style.scrollBehavior = oldBehavior;
+        track.style.scrollSnapType = oldSnap;
+        requestAnimationFrame(() => {
+          jumping = false;
+        });
+      });
+    }
+
+    function removeClones() {
+      track.querySelectorAll(`.${cloneClass}`).forEach((clone) => clone.remove());
+    }
+
+    function initLoop() {
+      if (loopReady) return;
+      const originalCards = getOriginalCards();
+      if (originalCards.length < 2) return;
+
+      originalCards.map(createClone).forEach((clone) => track.insertBefore(clone, track.firstChild));
+      originalCards.map(createClone).forEach((clone) => track.appendChild(clone));
+      loopReady = true;
+
+      requestAnimationFrame(() => {
+        const firstRealCard = getAllCards()[originalCards.length];
+        if (firstRealCard) jumpTo(getCardScrollLeft(firstRealCard));
+      });
+    }
+
+    function destroyLoop() {
+      if (!loopReady) return;
+      removeClones();
+      loopReady = false;
+      jumping = false;
+      track.style.scrollBehavior = '';
+      track.style.scrollSnapType = '';
+      track.scrollLeft = 0;
+    }
+
+    function normalizePosition() {
+      if (!loopReady || jumping) return;
+
+      const originalCount = getOriginalCards().length;
+      const allCards = getAllCards();
+      const firstRealCard = allCards[originalCount];
+      const lastRealCard = allCards[(originalCount * 2) - 1];
+      const firstAfterClone = allCards[originalCount * 2];
+      if (!firstRealCard || !lastRealCard || !firstAfterClone) return;
+
+      const span = getCardScrollLeft(firstAfterClone) - getCardScrollLeft(firstRealCard);
+      const threshold = firstRealCard.offsetWidth / 2;
+
+      if (track.scrollLeft < getCardScrollLeft(firstRealCard) - threshold) {
+        jumpTo(track.scrollLeft + span);
+      } else if (track.scrollLeft > getCardScrollLeft(lastRealCard) + threshold) {
+        jumpTo(track.scrollLeft - span);
+      }
+    }
+
+    function syncLoop() {
+      if (mobileQuery.matches) {
+        initLoop();
+      } else {
+        destroyLoop();
+      }
+    }
+
+    track.addEventListener('scroll', () => {
+      if (!mobileQuery.matches) return;
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(normalizePosition);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      const shouldRecenter = loopReady && mobileQuery.matches;
+      syncLoop();
+      if (shouldRecenter) {
+        requestAnimationFrame(() => {
+          const firstRealCard = getAllCards()[getOriginalCards().length];
+          if (firstRealCard) jumpTo(getCardScrollLeft(firstRealCard));
+        });
+      }
+    }, { passive: true });
+
+    syncLoop();
+  }
+
+  createMobileLoopScroller('.menu__grid', '.menu-card', 'menu-card--clone', 'center');
+  createMobileLoopScroller('.products__grid', '.product-card', 'product-card--clone', 'center');
+
   const heroNewsText = document.getElementById('heroNewsText');
   
   const heroNewsImg = document.getElementById('heroNewsImg'); // Знаходимо елемент картинки
@@ -346,4 +472,3 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
-

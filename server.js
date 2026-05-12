@@ -21,15 +21,136 @@ const MIME = {
   '.pdf': 'application/pdf'
 };
 
-// --- АВТОРИЗАЦІЯ ---
-const ADMIN_PASSWORD = '2104'; 
-const SESSION_COOKIE = 'auth_session=bakery_secret_token';
+// --- AUTHORIZATION ---
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV === 'production' ? '' : '2104');
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+const SESSION_COOKIE_NAME = 'bakery_admin_session';
+const SESSION_TTL_MS = 1000 * 60 * 60 * 12;
+const MAX_BODY_BYTES = 5 * 1024 * 1024;
+const loginAttempts = new Map();
 
-function isAuthenticated(req) {
-  const cookie = req.headers.cookie || '';
-  return cookie.includes(SESSION_COOKIE);
+if (!process.env.ADMIN_PASSWORD) {
+  console.warn(
+    process.env.NODE_ENV === 'production'
+      ? 'ADMIN_PASSWORD is not set. Admin login is disabled.'
+      : 'ADMIN_PASSWORD is not set. Using local development fallback password.'
+  );
+}
+if (!process.env.SESSION_SECRET) {
+  console.warn('SESSION_SECRET is not set. Sessions will reset when the server restarts.');
 }
 
+function parseCookies(req) {
+  const safeDecode = (value) => {
+    try {
+      return decodeURIComponent(value);
+    } catch (_) {
+      return value;
+    }
+  };
+
+  return Object.fromEntries(
+    (req.headers.cookie || '')
+      .split(';')
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .map((item) => {
+        const index = item.indexOf('=');
+        return index === -1
+          ? [safeDecode(item), '']
+          : [safeDecode(item.slice(0, index)), safeDecode(item.slice(index + 1))];
+      })
+  );
+}
+
+function signSessionPayload(payload) {
+  return crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('base64url');
+}
+
+function createSessionToken() {
+  const payload = `${Date.now()}.${crypto.randomBytes(24).toString('base64url')}`;
+  return `${payload}.${signSessionPayload(payload)}`;
+}
+
+function verifySessionToken(token) {
+  if (!token) return false;
+  const parts = token.split('.');
+  if (parts.length !== 3) return false;
+
+  const payload = `${parts[0]}.${parts[1]}`;
+  const signature = parts[2];
+  const expected = signSessionPayload(payload);
+  const signatureBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expected);
+
+  if (signatureBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(signatureBuffer, expectedBuffer)) {
+    return false;
+  }
+
+  const issuedAt = Number(parts[0]);
+  return Number.isFinite(issuedAt) && Date.now() - issuedAt <= SESSION_TTL_MS;
+}
+
+function isHttps(req) {
+  return req.headers['x-forwarded-proto'] === 'https' || req.socket.encrypted;
+}
+
+function buildCookie(value, req, maxAgeSeconds) {
+  const secure = isHttps(req) || process.env.NODE_ENV === 'production' ? '; Secure' : '';
+  return `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAgeSeconds}${secure}`;
+}
+
+function setAuthCookie(req, res) {
+  res.setHeader('Set-Cookie', buildCookie(createSessionToken(), req, Math.floor(SESSION_TTL_MS / 1000)));
+}
+
+function clearAuthCookie(req, res) {
+  res.setHeader('Set-Cookie', buildCookie('', req, 0));
+}
+
+function isAuthenticated(req) {
+  return verifySessionToken(parseCookies(req)[SESSION_COOKIE_NAME]);
+}
+
+function requireAdmin(req, res) {
+  if (isAuthenticated(req)) return true;
+  sendText(res, 403, 'Access denied');
+  return false;
+}
+
+function getClientKey(req) {
+  return String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'local').split(',')[0].trim();
+}
+
+function isLoginLimited(req) {
+  const key = getClientKey(req);
+  const now = Date.now();
+  const record = loginAttempts.get(key);
+  if (!record || now > record.resetAt) return false;
+  return record.count >= 5;
+}
+
+function recordFailedLogin(req) {
+  const key = getClientKey(req);
+  const now = Date.now();
+  const record = loginAttempts.get(key);
+  if (!record || now > record.resetAt) {
+    loginAttempts.set(key, { count: 1, resetAt: now + 15 * 60 * 1000 });
+    return;
+  }
+  record.count += 1;
+}
+
+function clearFailedLogins(req) {
+  loginAttempts.delete(getClientKey(req));
+}
+
+function safePasswordEquals(input) {
+  if (!ADMIN_PASSWORD) return false;
+  const a = Buffer.from(String(input || ''));
+  const b = Buffer.from(String(ADMIN_PASSWORD));
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
 function readDb() {
   if (!fs.existsSync(DB_PATH)) {
     fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true });
@@ -52,10 +173,19 @@ function sendText(res, status, message) {
   res.end(message);
 }
 
-function collectBody(req) {
+function collectBody(req, maxBytes = MAX_BODY_BYTES) {
   return new Promise((resolve, reject) => {
     const chunks = [];
-    req.on('data', (chunk) => chunks.push(chunk));
+    let size = 0;
+    req.on('data', (chunk) => {
+      size += chunk.length;
+      if (size > maxBytes) {
+        reject(new Error('Payload too large'));
+        req.destroy();
+        return;
+      }
+      chunks.push(chunk);
+    });
     req.on('end', () => resolve(Buffer.concat(chunks)));
     req.on('error', reject);
   });
@@ -98,53 +228,43 @@ function parseMultipart(buffer, contentType) {
 }
 
 async function handleApi(req, res, url) {
-  const db = readDb();
-
-  /// Логін
   if (req.method === 'POST' && url.pathname === '/api/login') {
-    try {
-      const body = await collectBody(req);
-      const { password } = JSON.parse(body.toString());
+    if (isLoginLimited(req)) {
+      sendText(res, 429, 'Too many login attempts. Try again later.');
+      return true;
+    }
 
-      if (password === ADMIN_PASSWORD) {
-        res.writeHead(200, {
-          'Content-Type': 'application/json',
-          'Set-Cookie': `${SESSION_COOKIE}; HttpOnly; Path=/; Max-Age=86400`
-        });
-        res.end(JSON.stringify({ success: true }));
+    try {
+      const body = await collectBody(req, 16 * 1024);
+      const { password } = JSON.parse(body.toString('utf8') || '{}');
+
+      if (safePasswordEquals(password)) {
+        clearFailedLogins(req);
+        setAuthCookie(req, res);
+        sendJson(res, 200, { success: true });
       } else {
-        sendText(res, 401, 'Невірний пароль');
+        recordFailedLogin(req);
+        sendText(res, 401, 'Invalid credentials');
       }
-    } catch (e) {
-      sendText(res, 400, 'Помилка запиту');
+    } catch (_) {
+      sendText(res, 400, 'Bad request');
     }
     return true;
   }
 
-  // --- РОУТ ДЛЯ ВИДАЛЕННЯ ---
-  if (req.method === 'DELETE' && url.pathname === '/api/products') {
-    const id = url.searchParams.get('id');
-    if (!id) {
-      sendText(res, 400, 'ID не вказано');
-      return true;
-    }
-
-    db.products = db.products.filter(p => p.id !== id);
-    writeDb(db);
-    
+  if (req.method === 'POST' && url.pathname === '/api/logout') {
+    clearAuthCookie(req, res);
     sendJson(res, 200, { success: true });
     return true;
   }
-  // Захист роутів
+
   const protectedRoutes = ['/api/products', '/api/settings/news'];
-  if (protectedRoutes.includes(url.pathname) && req.method !== 'GET') {
-    if (!isAuthenticated(req)) {
-      sendText(res, 403, 'Доступ заборонено');
-      return true;
-    }
+  if (protectedRoutes.includes(url.pathname) && req.method !== 'GET' && !requireAdmin(req, res)) {
+    return true;
   }
 
-  // Читання новини (для головної та адмінки)
+  const db = readDb();
+
   if (req.method === 'GET' && url.pathname === '/api/settings/news') {
     const newsData = typeof db.settings.news === 'object' 
          ? db.settings.news 
@@ -197,6 +317,26 @@ async function handleApi(req, res, url) {
   }
 
   // Додавання або редагування товару
+
+  if (req.method === 'DELETE' && url.pathname === '/api/products') {
+    const id = url.searchParams.get('id');
+    if (!id) {
+      sendText(res, 400, 'Product id is required');
+      return true;
+    }
+
+    const beforeCount = db.products.length;
+    db.products = db.products.filter((product) => product.id !== id);
+    if (db.products.length === beforeCount) {
+      sendText(res, 404, 'Product not found');
+      return true;
+    }
+
+    writeDb(db);
+    sendJson(res, 200, { success: true });
+    return true;
+  }
+
   if (req.method === 'POST' && url.pathname === '/api/products') {
     const contentType = req.headers['content-type'] || '';
     if (!contentType.includes('multipart/form-data')) {
@@ -269,10 +409,19 @@ async function handleApi(req, res, url) {
 }
 
 function serveStatic(req, res, url) {
-  const requested = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
+  let requested = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
+
+  if (requested === '/admin') requested = '/admin.html';
+  if (requested === '/login') requested = '/login.html';
 
   if (requested === '/admin.html' && !isAuthenticated(req)) {
-    res.writeHead(302, { 'Location': '/login.html' });
+    res.writeHead(302, { Location: '/login' });
+    res.end();
+    return;
+  }
+
+  if (requested === '/login.html' && isAuthenticated(req)) {
+    res.writeHead(302, { Location: '/admin' });
     res.end();
     return;
   }
@@ -301,7 +450,7 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/') && await handleApi(req, res, url)) return;
     serveStatic(req, res, url);
   } catch (error) {
-    sendText(res, 500, error.message || 'Server error');
+    sendText(res, error.message === 'Payload too large' ? 413 : 500, error.message || 'Server error');
   }
 });
 

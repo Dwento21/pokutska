@@ -1,11 +1,19 @@
 const CATEGORY_LABELS = {
   bread: 'Хліб',
-  croissants: 'Круасани',
+  croissants: 'Калачі',
   buns: 'Булочки',
   sweets: 'Солодка випічка',
-  pies: 'Пироги',
-  seasonal: 'Сезонні новинки'
+  pies: 'Фастфуд',
+  seasonal: 'Великодні вироби'
 };
+
+document.getElementById('logoutButton')?.addEventListener('click', async () => {
+  try {
+    await fetch('/api/logout', { method: 'POST' });
+  } finally {
+    window.location.href = '/login';
+  }
+});
 
 function escapeHtml(value = '') {
   return String(value)
@@ -19,6 +27,10 @@ function escapeHtml(value = '') {
 async function api(path, options = {}) {
   const response = await fetch(path, options);
   if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      window.location.href = '/login';
+      throw new Error('Потрібен вхід в адмін-панель.');
+    }
     const text = await response.text();
     throw new Error(text || 'Помилка запиту');
   }
@@ -103,42 +115,13 @@ window.deleteProduct = async (id) => {
   if (!confirm('Ви впевнені, що хочете видалити цей товар?')) return;
 
   try {
-    const response = await fetch(`/api/products?id=${id}`, {
-      method: 'DELETE'
-    });
-    
-    if (response.ok) {
-      loadAdminData(); // Автоматично оновлюємо список після видалення
-    } else {
-      alert('Помилка: сервер не зміг видалити товар');
-    }
-  } catch (error) {
-    console.error('Помилка:', error);
-    alert('Помилка зв\'язку з сервером при видаленні');
-  }
-};
-// Обробник для товарів
-document.getElementById('productForm').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const status = document.getElementById('productStatus');
-  status.textContent = 'Зберігаємо...';
-
-  try {
-    const formData = new FormData(form);
-    await api('/api/products', {
-      method: 'POST',
-      body: formData
-    });
-    
-    form.reset();
-    status.textContent = 'Товар додано успішно.';
+    await api(`/api/products?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
     loadAdminData();
   } catch (error) {
-    status.textContent = error.message || 'Не вдалося додати товар.';
+    console.error('Помилка:', error);
+    alert(error.message || 'Помилка звʼязку з сервером при видаленні');
   }
-});
-
+};
 // Обробник для новин
 // --- ОБРОБНИКИ ФОРМ ---
 
